@@ -1,1 +1,1 @@
-export { TodoType } from './todo'
+export type { TodoRouteType } from './todo'

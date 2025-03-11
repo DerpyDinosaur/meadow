@@ -1,4 +1,4 @@
-# api-client
+# app-client
 
 To install dependencies:
 

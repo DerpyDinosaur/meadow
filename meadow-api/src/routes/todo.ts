@@ -6,4 +6,4 @@ const app = new Hono()
   .get('/:id', (c) => c.json(`get ${c.req.param('id')}`))
 
 export default app
-export type TodoType = typeof app
+export type TodoRouteType = typeof app

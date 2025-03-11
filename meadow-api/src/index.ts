@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 // Routes
-import { todo } from './routes'
+import todo from './routes/todo'
 
 type Bindings = {};
 
