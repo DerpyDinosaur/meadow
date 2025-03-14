@@ -1,0 +1,21 @@
+{
+  "name": "@meadow/api",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./routes": "./src/routes/index.ts"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify"
+  },
+  "dependencies": {
+    "hono": "^4.7.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250214.0",
+    "@types/bun": "^1.2.4",
+    "wrangler": "^3.109.2"
+  }
+}

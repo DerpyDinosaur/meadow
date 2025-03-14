@@ -7,6 +7,9 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "bun --filter '*' dev",
+    "lint": "bun --filter '*' lint",
+    "format": "bun --filter '*' format",
     "clean": "rm -rf node_modules bun.lock"
   }
 }

@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "rm -rf dist && tsc",
-    "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
@@ -17,7 +16,6 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@meadow/api": "workspace:*",
     "hono": "^4.7.4"
   }
 }

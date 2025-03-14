@@ -1,0 +1,26 @@
+{
+  "name": "@meadow/config",
+  "type": "module",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "bun build index.ts --outdir dist --target node",
+    "types": "tsc --emitDeclarationOnly",
+    "prepare": "bun run build && bun run types"
+  },
+  "peerDependencies": {
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.7",
+    "@eslint/js": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "globals": "^16.0.0",
+    "jiti": "^2.4.2",
+    "typescript-eslint": "^8.26.1"
+  }
+}

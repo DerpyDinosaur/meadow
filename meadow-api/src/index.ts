@@ -1,10 +1,9 @@
-import { Hono } from 'hono'
-// Routes
-import todo from './routes/todo'
+import { Hono } from "hono";
 
-type Bindings = {};
+const app = new Hono();
 
-const app = new Hono<{ Bindings: Bindings }>()
-  .route('/todo', todo)
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
+});
 
-export default app
+export default app;
