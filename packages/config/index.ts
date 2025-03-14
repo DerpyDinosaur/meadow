@@ -3,13 +3,7 @@ import js from "@eslint/js";
 import ts from "typescript-eslint";
 import prettier from 'eslint-config-prettier';
 
-/**
- * Creates a base ESLint configuration that can be extended
- * @param {Object} options - Configuration options
- * @param {Array} options.extraPlugins - Additional plugins to include
- * @returns {Array} ESLint configuration array
- */
-export function mkEslint(options: { extraPlugins: Array<any> } = { extraPlugins: [] }): Array<any> {
+export function mkEslint(projectConfigs: Array<any> = []): Array<any> {
   const base = [
     {
       files: ["**/*.{js,mjs,cjs,ts}"]
@@ -30,9 +24,7 @@ export function mkEslint(options: { extraPlugins: Array<any> } = { extraPlugins:
     prettier
   ];
 
-  // Add any extra plugins
-  return [...base, ...options.extraPlugins];
+  return [...base, ...projectConfigs];
 }
 
-// Default export for simple usage
 export default mkEslint();
