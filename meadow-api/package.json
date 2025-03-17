@@ -1,5 +1,6 @@
 {
   "name": "@meadow/api",
+  "version": "0.0.1",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "lint": "prettier --check . && eslint .",
@@ -7,10 +8,14 @@
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.19.2",
+    "@hono/zod-validator": "^0.4.3",
+    "@scalar/hono-api-reference": "^0.7.1",
     "hono": "^4.7.4",
+    "hono-openapi": "^0.4.6",
     "hono-pino": "^0.8.0",
     "pino": "^9.6.0",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "zod-openapi": "^4.2.3"
   },
   "devDependencies": {
     "@meadow/config": "workspace:*",
