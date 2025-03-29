@@ -1,6 +1,10 @@
 <script lang="ts">
+	import type { LayoutProps } from './$types'
+	// Icons
+	import '@fortawesome/fontawesome-free/js/all.js'
+	// CSS
 	import '../app.css';
-	let { children } = $props();
+	let { children }: LayoutProps = $props();
 </script>
 
 <!-- <header class="p-2 flex justify-between items-center text-emerald-950 bg-white">
@@ -17,23 +21,35 @@
 	</nav>
 </header> -->
 
-<nav class="lg:fixed lg:w-20 lg:h-screen">
+<nav class="fixed bottom-0 w-screen h-20 lg:w-20 lg:h-screen bg-white">
 	<ul class="lg:h-full lg:flex lg:flex-col lg:items-center">
 		<li class="lg:w-full">
-			<span class="lg:text-[100px] material-icons">home</span>
+			<a class="lg:h-20 lg:flex lg:items-center">
+				<i class="fa-solid fa-house fa-2xl"></i>
+				<span class="lg:ml-4 lg:hidden">Home</span>
+			</a>
 		</li>
 
 		<li class="lg:w-full">
-			<span class="material-icons">add_box</span>
+			<a class="lg:h-20 lg:flex lg:items-center">
+				<i class="fa-solid fa-square-plus fa-2xl"></i>
+				<span class="lg:ml-4 lg:hidden">Add</span>
+			</a>
 		</li>
 
 		<li class="lg:w-full">
-			<span class="material-icons">calendar_month</span>
+			<a class="lg:h-20 lg:flex lg:items-center">
+				<i class="fa-solid fa-calendar-days fa-2xl"></i>
+				<span class="lg:ml-4 lg:hidden">Calendar</span>
+			</a>
 		</li>
 
 		<li class="lg:mt-auto lg:w-full">
-			<!-- <span class="material-icons">light_mode</span> -->
-			<span class="material-icons">dark_mode</span>
+			<a class="lg:h-20 lg:flex lg:items-center">
+				<!-- <i class="fa-solid fa-sun fa-2xl"></i> -->
+				<i class="fa-solid fa-moon fa-2xl"></i>
+				<span class="lg:ml-4 lg:hidden">Theme</span>
+			</a>
 		</li>
 	</ul>
 </nav>
