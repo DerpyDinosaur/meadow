@@ -1,3 +1,3 @@
-import base_eslint from "@meadow/config";
+import base_eslint from "@si/config";
 
 export default [...base_eslint];
