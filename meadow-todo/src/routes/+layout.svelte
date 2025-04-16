@@ -1,58 +1,45 @@
 <script lang="ts">
-	import type { LayoutProps } from './$types'
-	// Icons
-	import '@fortawesome/fontawesome-free/js/all.js'
+	import { Sidebar } from '@meadow/ui';
+	import { NotebookPen, House, SquarePlus } from '@lucide/svelte';
+	import type { LayoutProps } from './$types';
 	// CSS
 	import '../app.css';
 	let { children }: LayoutProps = $props();
+
+	const menu = [
+		{
+			name: "Home",
+			href: "/",
+			icon: House
+		},
+		{
+			name: "Add",
+			href: "/create",
+			icon: SquarePlus
+		}
+	]
 </script>
 
-<!-- <header class="p-2 flex justify-between items-center text-emerald-950 bg-white">
-	<div class="flex gap-2 justify-center items-center">
-		<div class="w-8 h-8 flex justify-center items-center rounded-md">
-			<span class="material-icons">grass</span> 
+<Sidebar data={menu} css="fixed bottom-0 w-screen h-auto bg-red-500 lg:static lg:w-auto lg:h-screen">
+	{#snippet logo()}
+		<div class="flex items-start gap-x-3">
+			<span class="flex h-[1lh] items-center">
+				<NotebookPen/>
+			</span>
+			Meadow Todo
 		</div>
-		
-		<h1>Todo</h1>
-	</div>
+	{/snippet}
 
-	<nav>
-		navigation
-	</nav>
-</header> -->
-
-<nav class="fixed bottom-0 w-screen h-20 lg:w-20 lg:h-screen bg-white">
-	<ul class="lg:h-full lg:flex lg:flex-col lg:items-center">
-		<li class="lg:w-full">
-			<a class="lg:h-20 lg:flex lg:items-center">
-				<i class="fa-solid fa-house fa-2xl"></i>
-				<span class="lg:ml-4 lg:hidden">Home</span>
-			</a>
-		</li>
-
-		<li class="lg:w-full">
-			<a class="lg:h-20 lg:flex lg:items-center">
-				<i class="fa-solid fa-square-plus fa-2xl"></i>
-				<span class="lg:ml-4 lg:hidden">Add</span>
-			</a>
-		</li>
-
-		<li class="lg:w-full">
-			<a class="lg:h-20 lg:flex lg:items-center">
-				<i class="fa-solid fa-calendar-days fa-2xl"></i>
-				<span class="lg:ml-4 lg:hidden">Calendar</span>
-			</a>
-		</li>
-
-		<li class="lg:mt-auto lg:w-full">
-			<a class="lg:h-20 lg:flex lg:items-center">
-				<!-- <i class="fa-solid fa-sun fa-2xl"></i> -->
-				<i class="fa-solid fa-moon fa-2xl"></i>
-				<span class="lg:ml-4 lg:hidden">Theme</span>
-			</a>
-		</li>
-	</ul>
-</nav>
+	{#snippet row({ name, href, icon })}
+		{@const Icon = icon}
+		<a href={href} class="mx-4 px-4 py-2 flex items-start gap-x-3 rounded">
+			<span class="flex h-[1lh] items-center">
+				<Icon/>
+			</span>
+			{name}
+		</a>
+	{/snippet}
+</Sidebar>
 
 <main class="lg:p-4 lg:ml-20">
 	<h1>This is some HTML BULL</h1>
