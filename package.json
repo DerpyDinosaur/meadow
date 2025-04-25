@@ -10,6 +10,6 @@
     "dev": "bun --filter '*' dev",
     "lint": "bun --filter '*' lint",
     "format": "bun --filter '*' format",
-    "clean": "bun ./scripts/clean.ts"
+    "clean": "bun ./scripts/clean.ts && rm bun.lock"
   }
 }
