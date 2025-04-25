@@ -17,6 +17,9 @@ async function main() {
 
 	for(const item of matched){
 		const full_path = join(item.parentPath, item.name)
+		if(full_path.match(/node_modules/g).length > 1){
+			continue
+		}
 		console.log("[x]", full_path)
 		await rm(full_path, { recursive: true, force: true });
 	}
