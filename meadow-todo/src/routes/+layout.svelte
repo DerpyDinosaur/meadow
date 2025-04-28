@@ -1,52 +1,87 @@
 <script lang="ts">
-	import { Sidebar } from '@meadow/ui';
-	import { NotebookPen, House, SquarePlus } from '@lucide/svelte';
+	import { Sidebar } from '@meadow/ui/navigation';
+	import { NotebookPen, Layers, Infinity, Hourglass, Calendar } from '@lucide/svelte';
+	import type { DataSection } from '@meadow/ui/types';
 	import type { LayoutProps } from './$types';
+	import { page } from '$app/state';
 	// CSS
 	import '../app.css';
 	let { children }: LayoutProps = $props();
 
-	const menu = [
+	const data: DataSection[] = [
 		{
-			name: "Home",
-			href: "/",
-			icon: House
+			title: "",
+			children: [
+				{
+					name: "All",
+					href: "/",
+					icon: Infinity
+				},
+				{
+					name: "Today",
+					href: "/",
+					icon: Hourglass
+				},
+				{
+					name: "Calendar",
+					href: "/calendar",
+					icon: Calendar
+				}
+			]
 		},
 		{
-			name: "Add",
-			href: "/create",
-			icon: SquarePlus
+			title: "Categories",
+			children: [
+				{
+					name: "Personal",
+					href: "/?cat=personal"
+				},
+				{
+					name: "Work",
+					href: "/?cat=work"
+				}
+			]
+		},
+		{
+			title: "Tags",
+			children: [
+				{
+					name: "Me",
+					href: "/"
+				}
+			]
 		}
 	]
+
+	const breadcrumb = [{}]
 </script>
 
-<Sidebar data={menu} css="fixed bottom-0 w-screen h-auto bg-red-500 lg:static lg:w-auto lg:h-screen">
-	{#snippet logo()}
-		<div class="flex items-start gap-x-3">
-			<span class="flex h-[1lh] items-center">
-				<NotebookPen/>
-			</span>
-			Meadow Todo
-		</div>
+<Sidebar {data}>
+	{#snippet header()}
+        <header class="p-2 flex items-center gap-x-8 border-b border-current/20">
+        	<div class="flex items-start gap-x-3 text-xl">
+        		<span class="flex h-[1lh] items-center text-highlight">
+        			<NotebookPen/>
+        		</span>
+        		<h1>Meadow Todo</h1>
+        	</div>
+
+			<div class="p-2 flex items-center opacity-50 rounded-lg hover:opacity-100 hover:bg-black/10 cursor-not-allowed">
+				<Layers/>	
+			</div>
+        </header>
 	{/snippet}
 
-	{#snippet row({ name, href, icon })}
-		{@const Icon = icon}
-		<a href={href} class="mx-4 px-4 py-2 flex items-start gap-x-3 rounded">
-			<span class="flex h-[1lh] items-center">
-				<Icon/>
-			</span>
-			{name}
-		</a>
+	{#snippet footer()}
+		<h1>Account</h1>
 	{/snippet}
 </Sidebar>
 
-<main class="lg:p-4 lg:ml-20">
-	<h1>This is some HTML BULL</h1>
-	<div class="m-4 w-20 h-20 bg-red-500"></div>
-	<div class="m-4 w-20 h-20 bg-red-500"></div>
-	<div class="m-4 w-20 h-20 bg-red-500"></div>
-	<div class="m-4 w-20 h-20 bg-red-500"></div>
-	<div class="m-4 w-20 h-20 bg-red-500"></div>
-	<!-- {@render children()} -->
-</main>
+<section class="p-4 overflow-y-scroll">
+	<header class="mb-4">
+		<div>
+			{JSON.stringify(page)}
+		</div>
+	</header>
+	{@render children()}
+</section>
