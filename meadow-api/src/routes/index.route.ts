@@ -6,24 +6,23 @@ import { z } from 'zod'
 
 const tags = ["index"];
 
-const router = mkroute();
-
-router.get(
-  "/:id",
-  describeRoute({
-    tags,
-    description: "Say hello to the user",
-    responses: {
-      200: json_content(
-        z.object({ message: z.string() }),
-        "Successful Response",
-      ),
+const router = mkroute()
+  .get(
+    "/:id",
+    describeRoute({
+      tags,
+      description: "Say hello to the user",
+      responses: {
+        200: json_content(
+          z.object({ message: z.string() }),
+          "Successful Response",
+        ),
+      },
+    }),
+    zValidator('param', z.object({ id: z.number() })),
+    (c) => {
+      return c.json({ message: "Hello World" });
     },
-  }),
-  zValidator('param', z.object({ id: z.number() })),
-  (c) => {
-    return c.json({ message: "Hello World" });
-  },
-);
+  );
 
 export default router;

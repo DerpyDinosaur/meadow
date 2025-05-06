@@ -1,10 +1,11 @@
 import mkapp from "./lib/mkapp";
 import mkOpenAPI from "./lib/openapi";
 import index from "./routes/index.route";
+import authentication from "./routes/auth.route";
 
 const app = mkapp();
 
-const routes = [index];
+const routes = [authentication, index];
 
 mkOpenAPI(app);
 

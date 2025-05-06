@@ -52,11 +52,13 @@
 			]
 		}
 	]
-
-	const breadcrumb = [{}]
 </script>
 
-<Sidebar {data}>
+<svelte:head>
+	<title>Meadow - Todo</title>
+</svelte:head>
+
+<Sidebar>
 	{#snippet header()}
         <header class="p-2 flex items-center gap-x-8 border-b border-current/20">
         	<div class="flex items-start gap-x-3 text-xl">
@@ -72,8 +74,26 @@
         </header>
 	{/snippet}
 
+	<nav class="mt-4 px-4 flex flex-col grow-1 gap-y-4 text-md">
+		{#each data as { title, children }}
+			<div>
+                {#if title}
+                    <h2 class="pb-2 font-sans text-sm opacity-50">{title}</h2>
+                {/if}
+
+                <div class="grid grid-cols-[auto_1fr]">
+                    {#each children as child}
+                    	<Sidebar.item {...child}/>
+                    {/each}
+                </div>
+			</div>
+		{/each}
+	</nav>
+
 	{#snippet footer()}
-		<h1>Account</h1>
+	    <footer class="p-4 flex gap-x-2 border-t border-current/20">
+	        <p>Account</p>
+	    </footer>
 	{/snippet}
 </Sidebar>
 

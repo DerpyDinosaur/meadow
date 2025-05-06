@@ -1,10 +1,10 @@
-import type { Snippet } from "svelte";
+import type { Component, Snippet } from "svelte";
 import type { ClassValue } from "svelte/elements";
 
 export type DataItem = {
 	name: string;
 	href: string;
-	icon?: any;
+	icon?: Component;
 }
 
 export type DataSection = {
@@ -17,8 +17,7 @@ interface Props {
 }
 
 export interface SidebarProps extends Props {
-	data: DataSection[];
-	header: Snippet;
-	row: Snippet;
-	footer: Snippet;
+	style?: ClassValue;
+	header?: Snippet;
+	footer?: Snippet;
 }

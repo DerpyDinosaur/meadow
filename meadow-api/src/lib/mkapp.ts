@@ -8,12 +8,12 @@ export function mkroute() {
 }
 
 export default function mkapp() {
-  const app = mkroute();
-  app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
-  app.use(logger());
-  app.onError(onError);
-  app.notFound((c) =>
-    c.json({ message: `Route Not Found: '${c.req.path}'` }, 404),
-  );
+  const app = mkroute()
+    .use("/favicon.ico", serveStatic({ path: "./favicon.ico" }))
+    .use(logger())
+    .onError(onError)
+    .notFound((c) =>
+      c.json({ message: `Route Not Found: '${c.req.path}'` }, 404),
+    );
   return app;
 }
