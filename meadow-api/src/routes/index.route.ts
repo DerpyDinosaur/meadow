@@ -1,28 +1,31 @@
-import { describeRoute } from "hono-openapi";
 import { mkroute } from "../lib/mkapp";
 import { json_content } from "../lib/openapi";
-import { validator as zValidator } from "hono-openapi/zod";
-import { z } from 'zod'
-
-const tags = ["index"];
+import { z } from "zod";
+import { createRoute } from "@hono/zod-openapi";
+import packageJSON from "../../package.json";
 
 const router = mkroute()
-  .get(
-    "/:id",
-    describeRoute({
-      tags,
-      description: "Say hello to the user",
+  .openapi(
+    createRoute({
+      tags: ["index"],
+      method: 'get',
+      path: '/',
       responses: {
         200: json_content(
-          z.object({ message: z.string() }),
+          z.object({
+            version: z.string(),
+            status: z.string()
+          }),
           "Successful Response",
         ),
-      },
+      }
     }),
-    zValidator('param', z.object({ id: z.number() })),
     (c) => {
-      return c.json({ message: "Hello World" });
-    },
+      return c.json({
+        version: packageJSON.version || "unkown",
+        status: "ok"
+      }, 200);
+    }
   );
 
 export default router;

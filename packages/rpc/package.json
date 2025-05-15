@@ -1,21 +1,22 @@
 {
-  "name": "@meadow/api-client",
-  "version": "0.0.1",
+  "name": "@meadow/rpc",
+  "version": "1.0.0",
   "type": "module",
-  "private": true,
+  "main": "./dist/index.js",
   "scripts": {
     "dev": "tsc --watch",
     "build": "rm -rf dist && tsc",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250310.0",
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "@meadow/api": "workspace:*",
     "hono": "^4.7.4"
   }
 }

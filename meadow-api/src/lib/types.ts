@@ -1,5 +1,5 @@
 import type { RouteConfig, RouteHandler } from "@hono/zod-openapi";
-import type { Hono } from "hono";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import type { PinoLogger } from "hono-pino";
 import type { auth } from './auth'
 
@@ -12,7 +12,7 @@ export interface MeadowBindings {
   };
 }
 
-export type MeadowOpenAPI = Hono<MeadowBindings>;
+export type MeadowOpenAPI = OpenAPIHono<MeadowBindings>;
 
 export type MeadowRouteHandler<R extends RouteConfig> = RouteHandler<
   R,

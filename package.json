@@ -14,10 +14,10 @@
     "clean": "bun ./scripts/clean.ts && rm bun.lock"
   },
   "devDependencies": {
-    "turbo": "^2.5.2"
+    "turbo": "^2.5.3"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.2.10"
+  "packageManager": "bun@1.2.13"
 }
