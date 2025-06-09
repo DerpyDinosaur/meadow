@@ -1,11 +1,13 @@
 import { mkroute } from "../lib/mkapp";
 import type { MeadowOpenAPI } from "../lib/types";
 
-import indexRoute from './index.route';
+import index from './index.route';
+import tasks from './tasks/tasks.index';
 
 export function regroutes(app: MeadowOpenAPI){
     return app
-        .route('/', indexRoute)
+        .route('/', index)
+        .route('/', tasks)
 }
 
 export const router = regroutes(mkroute())

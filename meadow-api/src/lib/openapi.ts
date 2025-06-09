@@ -3,13 +3,16 @@ import packageJSON from "../../package.json";
 import { apiReference } from "@scalar/hono-api-reference";
 import type { ZodSchema } from "zod";
 
-export const json_content = <T extends ZodSchema>(
-  schema: T,
+export const json_content = <
+  T extends ZodSchema,
+>(schema: T,
   description: string,
 ) => {
   return {
     content: {
-      "application/json": { schema },
+      "application/json": {
+        schema,
+      },
     },
     description,
   };
