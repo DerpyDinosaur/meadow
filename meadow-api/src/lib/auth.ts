@@ -1,12 +1,8 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-
-import { drizzle } from 'drizzle-orm/bun-sqlite';
-import { Database } from 'bun:sqlite';
+import db from "../db";
 import { account, session, user, verification } from "../db/auth-schema";
 
-const sqlite = new Database('test.sqlite');
-const db = drizzle({ client: sqlite });
  
 export const auth = betterAuth({
     database: drizzleAdapter(db, {

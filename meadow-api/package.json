@@ -23,6 +23,7 @@
     "zod": "^3.25.53"
   },
   "devDependencies": {
+    "@libsql/client": "^0.15.9",
     "@meadow/config": "workspace:*",
     "@types/bun": "^1.2.15",
     "drizzle-kit": "^0.31.1",
