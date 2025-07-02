@@ -16,4 +16,19 @@ export const list = createRoute({
 	}
 })
 
-export type TasksListRoute = typeof list;
+export const create = createRoute({
+	path: "/tasks",
+	method: "post",
+	tags,
+	responses: {
+		200: json_content(
+			z.object({success: z.boolean()}),
+			"Create a tasks"
+		)
+	}
+})
+
+export type TasksList = typeof list;
+export type TasksCreate = typeof create;
+// export type TasksFetch = typeof fetch;
+// export type TasksDelete = typeof delete;
