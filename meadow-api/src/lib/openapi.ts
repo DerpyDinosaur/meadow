@@ -1,6 +1,6 @@
 import type { MeadowOpenAPI } from "./types";
 import packageJSON from "../../package.json";
-import { apiReference } from "@scalar/hono-api-reference";
+import { Scalar } from "@scalar/hono-api-reference";
 import type { ZodSchema } from "zod";
 
 export const json_content = <
@@ -37,7 +37,7 @@ export default function mkOpenAPI(app: MeadowOpenAPI) {
 
   app.get(
     "/docs",
-    apiReference({
+    Scalar({
       layout: "classic",
       theme: "saturn",
       defaultHttpClient: {

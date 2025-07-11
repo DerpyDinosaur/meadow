@@ -10,6 +10,7 @@ export const list: MeadowRouteHandler<TasksList> = async (c) => {
 }
 
 export const create: MeadowRouteHandler<TasksCreate> = async (c) => {
-	db.insert(taskTable)
-	return c.json({success: true})
+	const task = c.req.valid('json')
+	const [inserted] = await db.insert(taskTable).values(task).returning();
+	return c.json({inserted, success: true})
 }
