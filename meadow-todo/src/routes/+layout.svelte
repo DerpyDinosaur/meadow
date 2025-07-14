@@ -99,9 +99,9 @@
 
 <section class="p-4 overflow-y-scroll">
 	<header class="mb-4">
-		<div>
+<!-- 		<div>
 			{JSON.stringify(page)}
-		</div>
+		</div> -->
 	</header>
 	{@render children()}
 </section>

@@ -2,7 +2,7 @@ import type { MeadowRouteHandler } from "../../lib/types";
 import type { TasksList, TasksCreate } from "./tasks.docs";
 
 import db from '../../db'
-import { tasks as taskTable } from '../../db/tasks.schema'
+import { tasks as taskTable } from '../../db/schema/tasks'
 
 export const list: MeadowRouteHandler<TasksList> = async (c) => {
 	const tasks = await db.select().from(taskTable);

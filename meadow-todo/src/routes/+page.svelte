@@ -1,50 +1,44 @@
 <script lang="ts">
-	// import { Flag, Circle } from '@lucide/svelte';
-	// import type { PageProps } from './$types';
+	import { Flag, Circle } from '@lucide/svelte';
+	import type { PageProps } from './$types';
 
-	// let { data }: PageProps = $props();
-	// let tasks = $derived(data.tasks || []);
-	
-	// Types
-	type Task = {
-		id: string;
-		text: string;
-		done: boolean;
-	}
+	let { data }: PageProps = $props();
+	let tasks = $derived(data.tasks || []);
 
 	// Vars
-	let tasks: Task[] = $state([])
-	let filter: 'all'|'active'|'done' = $state('all');
-	let filteredTasks = $derived.by(() => {
-		return tasks
-	})
+	// let tasks: Task[] = $state([])
+	// let filter: 'all'|'active'|'done' = $state('all');
+	// let filteredTasks = $derived.by(() => {
+	// 	return tasks
+	// })
 
-	function add_task(event: KeyboardEvent){
-		if(event.key !== 'Enter') return
+	// function add_task(event: KeyboardEvent){
+	// 	if(event.key !== 'Enter') return
 
-		const element = event.target as HTMLInputElement;
-		tasks = [...tasks, {id: crypto.randomUUID(), text: element.value, done: false}];
-		element.value = '';
-	}
+	// 	const element = event.target as HTMLInputElement;
+	// 	tasks = [...tasks, {id: crypto.randomUUID(), text: element.value, done: false}];
+	// 	element.value = '';
+	// }
 </script>
-
-<input onkeydown={add_task} placeholder="Add Task" type="text" />
 
 <section>
 	<header>
 		<h2>All Tasks</h2>
 	</header>
 
-	{#each filteredTasks as task, i}
-		<div class="flex flex-col">
-			{i}
-			{JSON.stringify(task)}
-		</div>
-	{/each}
+	<div class="grid gap-4 grid-rows-auto">
+		{#each tasks as task, i}
+			<div class="grid grid-cols-[auto_1fr_1fr] grid-rows-2 bg-bg">
+				<div class="grid grid-rows-subgrid row-span-2">
+					<Circle/>
+				</div>
+			</div>
+		{/each}
+	</div>
 </section>
 
 <!-- <div class="flex flex-col gap-4">
-	{#each tasks as {title, description, priority, duedate}}
+	{#each tasks as {title, description, priority, created}}
 		<section class="p-4 grid grid-cols-[auto_1fr] grid-rows-2 rounded-lg text-font-color bg-bg">
 			<div class="flex items-center">
 				<Circle/>
@@ -67,7 +61,7 @@
 						</div>
 					{/if}
 					
-					{duedate}
+					{created}
 				</footer>
 			</div>
 		</section>

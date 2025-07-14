@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { json_content } from "../../lib/openapi";
-import { tasksSelectSchema, tasksInsertSchema } from "../../db/tasks.schema";
+import { tasksSelectSchema, tasksInsertSchema } from "../../db/schema/tasks";
 
 const tags = ["tasks"];
 
