@@ -97,11 +97,11 @@
 	{/snippet}
 </Sidebar>
 
-<section class="p-4 overflow-y-scroll">
-	<header class="mb-4">
-<!-- 		<div>
+<section class="p-4 w-screen sm:w-full overflow-y-scroll">
+<!-- 	<header class="mb-4">
+		<div>
 			{JSON.stringify(page)}
-		</div> -->
-	</header>
+		</div>
+	</header> -->
 	{@render children()}
 </section>

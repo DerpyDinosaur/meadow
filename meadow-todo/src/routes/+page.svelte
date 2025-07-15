@@ -21,17 +21,24 @@
 	// }
 </script>
 
-<section>
+<section class="w-full grid gap-y-4 grid-rows-[auto_1fr]">
 	<header>
-		<h2>All Tasks</h2>
+		<h2 class="text-2xl">All Tasks</h2>
 	</header>
 
-	<div class="grid gap-4 grid-rows-auto">
+	<div class="w-full grid gap-4 grid-rows-auto text-white md:m-auto md:w-3/4">
 		{#each tasks as task, i}
-			<div class="grid grid-cols-[auto_1fr_1fr] grid-rows-2 bg-bg">
-				<div class="grid grid-rows-subgrid row-span-2">
-					<Circle/>
+			<div class="p-4 w-full grid gap-x-4 grid-cols-[auto_1fr_auto] grid-rows-2 bg-bg rounded-md drop-shadow-lg">
+				<Circle class="w-full h-full grid grid-rows-subgrid grid-rows-2 row-span-2 items-center text-highlight"/>
+
+				<h1 class="font-bold text-xl">{task.name}</h1>
+
+				<div class="flex gap-2 justify-end items-center">
+					<p>edit</p>
+					<p>delete</p>
 				</div>
+
+				<p class="col-span-2">{task.description}</p>
 			</div>
 		{/each}
 	</div>
