@@ -11,6 +11,9 @@ export const tasks = sqliteTable("tasks", {
 	priority: integer({ mode: "number" })
 		.notNull()
 		.default(0),
+	tag: text()
+		.notNull()
+		.default('{\"tags\":[]}'),
 	created: integer({ mode: "timestamp" })
 		.notNull()
 		.$default(() => new Date()),
