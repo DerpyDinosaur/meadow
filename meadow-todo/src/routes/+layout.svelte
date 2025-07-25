@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Sidebar } from '@meadow/ui/navigation';
-	import { NotebookPen, Layers, Infinity, Hourglass, Calendar } from '@lucide/svelte';
+	import { NotebookPen, Layers, Infinity as _Infinity, Hourglass, Calendar } from '@lucide/svelte';
 	import type { DataSection } from '@meadow/ui/types';
 	import type { LayoutProps } from './$types';
 	import { page } from '$app/state';
@@ -15,7 +15,7 @@
 				{
 					name: "All",
 					href: "/",
-					icon: Infinity
+					icon: _Infinity
 				},
 				{
 					name: "Today",

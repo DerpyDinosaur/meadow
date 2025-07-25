@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { Flag, Circle } from '@lucide/svelte';
+	import Task from '$lib/Task.svelte'
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
-	let tasks = $derived(data.tasks || []);
+
+	let inputName = $state("")
+	let inputDesc = $state("")
 
 	// Vars
 	// let tasks: Task[] = $state([])
@@ -27,20 +29,20 @@
 	</header>
 
 	<div class="w-full grid gap-4 grid-rows-auto text-white md:m-auto md:w-3/4">
-		{#each tasks as task, i}
-			<div class="p-4 w-full grid gap-x-4 grid-cols-[auto_1fr_auto] grid-rows-2 bg-bg rounded-md drop-shadow-lg">
-				<Circle class="w-full h-full grid grid-rows-subgrid grid-rows-2 row-span-2 items-center text-highlight"/>
+		<form>
+			<input bind:value={inputName} class="bg-bg/50" type="text" name="name" placeholder="name" />
+			<input bind:value={inputDesc} class="bg-bg/50" type="text" name="desc" placeholder="desc" />
 
-				<h1 class="font-bold text-xl">{task.name}</h1>
+			<Task bind:name={inputName} bind:description={inputDesc}></Task>
+		</form>
 
-				<div class="flex gap-2 justify-end items-center">
-					<p>edit</p>
-					<p>delete</p>
-				</div>
+		<div class="w-full h-1 bg-highlight rounded-full"></div>
 
-				<p class="col-span-2">{task.description}</p>
-			</div>
-		{/each}
+		{#if data.tasks}
+			{#each data.tasks as task, i}
+				<Task {...task}></Task>
+			{/each}
+		{/if}
 	</div>
 </section>
 
