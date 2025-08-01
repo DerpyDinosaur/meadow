@@ -29,11 +29,16 @@
 	</header>
 
 	<div class="w-full grid gap-4 grid-rows-auto text-white md:m-auto md:w-3/4">
-		<form>
-			<input bind:value={inputName} class="bg-bg/50" type="text" name="name" placeholder="name" />
-			<input bind:value={inputDesc} class="bg-bg/50" type="text" name="desc" placeholder="desc" />
+		<form class="w-full grid gap-4 grid-rows-[1fr_auto] items-center">
+			<div class="mx-auto w-full xl:w-3/4 flex gap-2 flex-col">
+				<label class="text-highlight font-bold">Title:</label>
+				<input bind:value={inputName} class="px-4 py-2 bg-bg/50 rounded" type="text" name="name" placeholder="Title" />
 
-			<Task bind:name={inputName} bind:description={inputDesc}></Task>
+				<label class="text-highlight font-bold">Description:</label>
+				<input bind:value={inputDesc} class="px-4 py-2 bg-bg/50 rounded" type="text" name="desc" placeholder="Description" />
+			</div>
+
+			<button type="submit" class="mx-auto w-full xl:w-3/4 h-10 px-4 py-2 bg-bg rounded">Add Task</button>
 		</form>
 
 		<div class="w-full h-1 bg-highlight rounded-full"></div>
