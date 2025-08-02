@@ -14,7 +14,7 @@
     "clean": "bun ./scripts/clean.ts && rm bun.lock"
   },
   "devDependencies": {
-    "turbo": "^2.5.4"
+    "turbo": "^2.5.5"
   },
   "engines": {
     "node": ">=18"
