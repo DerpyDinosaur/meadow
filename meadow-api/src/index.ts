@@ -3,7 +3,6 @@ import routes from './routes';
 
 const app = routes;
 
-// Serve OpenAPI documentation at /doc (Swagger UI)
 app.get(
   "/docs",
   Scalar({
@@ -13,11 +12,10 @@ app.get(
       targetKey: "js",
       clientKey: "fetch",
     },
-    url: "/openapi",
+    url: "/api/openapi",
   }),
 )
 
-// Optional: Serve the OpenAPI JSON spec
 app.get('/openapi', (c) =>
   c.json(
     app.getOpenAPI31Document({
