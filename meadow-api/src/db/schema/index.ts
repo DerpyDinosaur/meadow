@@ -1,7 +1,7 @@
-import * as tasksSchema from './tasks'
-import * as authSchema from './auth'
+import * as tasks from './tasks'
+import * as auth from './auth'
 
 export {
-	tasksSchema,
-	authSchema
+	tasks,
+	auth
 }

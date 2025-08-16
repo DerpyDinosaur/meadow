@@ -1,14 +1,8 @@
-import { mkroute } from "../lib/mkapp";
-import type { MeadowOpenAPI } from "../lib/types";
+import { OpenAPIHono } from '@hono/zod-openapi';
+import tasks from './tasks';
 
-import index from './index.route';
-import tasks from './tasks/tasks.index';
+const app = new OpenAPIHono();
 
-export function regroutes(app: MeadowOpenAPI){
-    return app
-        .route('/', index)
-        .route('/', tasks)
-}
+app.route('/tasks', tasks);
 
-export const router = regroutes(mkroute())
-export type router = typeof router;
+export default app;

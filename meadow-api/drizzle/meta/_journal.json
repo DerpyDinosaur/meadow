@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1746248830832,
-      "tag": "0000_sparkling_winter_soldier",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1750848055039,
-      "tag": "0001_chief_the_renegades",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1752290987958,
-      "tag": "0002_bent_zeigeist",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1752291395177,
-      "tag": "0003_reflective_mantis",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1752291633947,
-      "tag": "0004_modern_lenny_balinger",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "6",
-      "when": 1752291753593,
-      "tag": "0005_watery_lady_deathstrike",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "6",
-      "when": 1752291837845,
-      "tag": "0006_chubby_tyger_tiger",
+      "when": 1755329768655,
+      "tag": "0000_true_martin_li",
       "breakpoints": true
     }
   ]
