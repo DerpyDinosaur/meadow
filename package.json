@@ -1,24 +1,25 @@
 {
   "name": "meadow",
-  "private": true,
-  "workspaces": [
-    "meadow-api",
-    "packages/*"
-  ],
-  "scripts": {
-    "dev": "turbo run dev",
-    "clean": "bun ./scripts/clean.ts && rm bun.lock"
-  },
   "devDependencies": {
-    "turbo": "^2.5.5"
+    "@emnapi/core": "^1.4.5",
+    "@emnapi/runtime": "^1.4.5",
+    "@emnapi/wasi-threads": "^1.0.4",
+    "@tybys/wasm-util": "^0.10.0",
+    "turbo": "^2.5.6"
   },
   "engines": {
     "node": ">=18"
   },
   "packageManager": "bun@1.2.20",
-  "trustedDependencies": [
-    "@meadow/config",
-    "@meadow/todo",
-    "@tailwindcss/oxide"
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "clean": "bun ./scripts/clean.ts && rm bun.lock"
+  },
+  "workspaces": [
+    "meadow-api",
+    "meadow-todo",
+    "packages/*"
   ]
 }
