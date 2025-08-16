@@ -3,14 +3,10 @@
   "private": true,
   "workspaces": [
     "meadow-api",
-    "meadow-todo",
     "packages/*"
   ],
   "scripts": {
     "dev": "turbo run dev",
-    "dev:todo": "turbo run dev --filter=@meadow/todo --filter=@meadow/ui",
-    "//lint": "bun --filter '*' lint",
-    "//format": "bun --filter '*' format",
     "clean": "bun ./scripts/clean.ts && rm bun.lock"
   },
   "devDependencies": {
@@ -19,7 +15,7 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.2.15",
+  "packageManager": "bun@1.2.20",
   "trustedDependencies": [
     "@meadow/config",
     "@meadow/todo",
