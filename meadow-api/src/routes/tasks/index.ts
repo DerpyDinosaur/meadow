@@ -1,5 +1,5 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { get_one, get_all, post_one, put_one } from './docs';
+import { get_one, get_all, post_one, put_one, delete_one } from './docs';
 import { eq } from 'drizzle-orm';
 import { db } from '../../db/index';
 import { tasks } from '../../db/schema';
@@ -38,6 +38,18 @@ const app = new OpenAPIHono<MeadowBindings>()
 
 		if (!updated) return c.json({ error: 'Task not found' }, 404);
 		return c.json(updated);
+	})
+	.openapi(delete_one, async (c) => {
+		const { id } = c.req.valid('param');
+
+		const deleted = await db
+			.delete(tasks.table)
+			.where(eq(tasks.table.id, parseInt(id)))
+			.returning();
+
+		console.log(deleted)
+		if (!deleted.length) return c.json({error: "Task not found"}, 404);
+		return c.body(null, 204);
 	})
 
 export default app;

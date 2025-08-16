@@ -109,3 +109,27 @@ export const put_one = createRoute({
     },
   },
 });
+
+/* DELETE */
+export const delete_one = createRoute({
+  method: 'delete',
+  path: '/{id}',
+  tags,
+  request: {
+    params: z.object({
+      id: z.string().openapi({
+        param: { name: 'id', in: 'path' },
+        type: 'integer',
+        example: '1',
+      }),
+    }),
+  },
+  responses: {
+    204: {
+      description: 'Todo deleted',
+    },
+    404: {
+      description: 'Todo not found',
+    },
+  },
+});
