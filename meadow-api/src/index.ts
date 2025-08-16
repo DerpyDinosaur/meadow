@@ -1,8 +1,21 @@
 import { Scalar } from '@scalar/hono-api-reference';
 import routes from './routes';
+import { serveStatic } from "hono/bun";
+import { onError, logger } from "./middleware";
+import { OpenAPIHono } from '@hono/zod-openapi';
+import type { MeadowBindings } from './lib/types';
 
-const app = routes;
+const app = new OpenAPIHono<MeadowBindings>();
 
+// Middleware
+app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }))
+app.use(logger())
+app.onError(onError)
+
+// Init Routes
+app.route('/api', routes)
+
+// OpenAPI
 app.get(
   "/docs",
   Scalar({
@@ -12,10 +25,9 @@ app.get(
       targetKey: "js",
       clientKey: "fetch",
     },
-    url: "/api/openapi",
+    url: "/openapi",
   }),
 )
-
 app.get('/openapi', (c) =>
   c.json(
     app.getOpenAPI31Document({
@@ -28,5 +40,4 @@ app.get('/openapi', (c) =>
   )
 );
 
-export default app
-export type AppType = typeof routes;
+export default app;

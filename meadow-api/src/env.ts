@@ -12,7 +12,8 @@ const EnvSchema = z.object({
     "silent",
   ]),
   BETTER_AUTH_URL: z.string().url(),
-  BETTER_AUTH_SECRET: z.string()
+  BETTER_AUTH_SECRET: z.string(),
+  DB_FILE_NAME: z.string()
 });
 
 export type env = z.infer<typeof EnvSchema>;

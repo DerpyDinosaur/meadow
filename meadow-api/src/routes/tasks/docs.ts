@@ -1,9 +1,10 @@
 import { createRoute, z } from '@hono/zod-openapi';
-import { TasksSchema } from '../../db/schema/tasks';
+import { TasksSchema, TasksInsertSchema } from '../../db/schema/tasks';
 
 const tags = ['tasks']
 
-export const list = createRoute({
+/* GET */
+export const get_all = createRoute({
   method: 'get',
   path: '/',
   tags,
@@ -14,7 +15,97 @@ export const list = createRoute({
           schema: z.array(TasksSchema),
         },
       },
-      description: 'List all tasks',
+      description: 'Tasks found',
+    },
+  },
+});
+
+export const get_one = createRoute({
+  method: 'get',
+  path: '/{id}',
+  tags,
+  request: {
+    params: z.object({
+      id: z.string().openapi({
+        param: { name: 'id', in: 'path' },
+        type: 'integer',
+        example: '1',
+      }),
+    }),
+  },
+  responses: {
+    200: {
+      content: {
+        'application/json': {
+          schema: TasksSchema,
+        },
+      },
+      description: 'Task found',
+    },
+    404: {
+      description: 'Task not found',
+    },
+  },
+});
+
+/* POST */
+export const post_one = createRoute({
+  method: 'post',
+  path: '/',
+  tags,
+  request: {
+    body: {
+      content: {
+        'application/json': {
+          schema: TasksInsertSchema,
+        },
+      },
+    },
+  },
+  responses: {
+    201: {
+      content: {
+        'application/json': {
+          schema: TasksSchema,
+        },
+      },
+      description: 'Task created',
+    },
+  },
+});
+
+/* PUT */
+export const put_one = createRoute({
+  method: 'put',
+  path: '/{id}',
+  tags,
+  request: {
+    params: z.object({
+      id: z.string().openapi({
+        param: { name: 'id', in: 'path' },
+        type: 'integer',
+        example: '1',
+      }),
+    }),
+    body: {
+      content: {
+        'application/json': {
+          schema: TasksInsertSchema.partial(), // Allow partial updates
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      content: {
+        'application/json': {
+          schema: TasksSchema,
+        },
+      },
+      description: 'Task updated',
+    },
+    404: {
+      description: 'Task not found',
     },
   },
 });

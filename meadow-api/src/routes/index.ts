@@ -1,8 +1,9 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import tasks from './tasks';
+import type { MeadowBindings } from '../lib/types';
 
-const app = new OpenAPIHono().basePath('/api');
-
-app.route('/tasks', tasks);
+const app = new OpenAPIHono<MeadowBindings>()
+	.route('/tasks', tasks);
 
 export default app;
+export type AppType = typeof app;
