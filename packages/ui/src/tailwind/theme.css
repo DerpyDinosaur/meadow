@@ -1,10 +1,51 @@
-@theme {
-  --color-primary: oklch(0.58 0.0422 139.18);
-  --color-highlight: oklch(0.7 0.1283 45.14);
+:root {
+  --background: oklch(0.98 0.01 120); /* Light Green */
+  --foreground: oklch(0.2 0.02 120);
+  --primary: oklch(0.596 0.1274 163.23); /* Green */
+  --secondary: oklch(0.6087 0.1129 52.83); /* Copper */
+  --accent: oklch(0.45 0.12 45);
+  --border: oklch(0.88 0.02 120);
+
+  --element: oklch(0.95 0.015 120);
 }
 
 @theme inline {
-  --color-font-color: var(--font-color);
-  --color-bg: var(--background-color);
-  --color-fg: var(--background-color);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-element: var(--element);
+}
+
+@layer utilities {
+  .neumorphic {
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.8);
+  }
+
+  .neumorphic-inset {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+  }
+
+  .neumorphic-hover {
+    transition: all 0.3s ease;
+  }
+
+  .neumorphic-hover:hover {
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.15), -12px -12px 24px rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+  }
+
+  .dark .neumorphic {
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.05);
+  }
+
+  .dark .neumorphic-inset {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+  }
+
+  .dark .neumorphic-hover:hover {
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.4), -12px -12px 24px rgba(255, 255, 255, 0.08);
+  }
 }
