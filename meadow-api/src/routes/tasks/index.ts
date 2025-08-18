@@ -12,11 +12,11 @@ const app = new OpenAPIHono<MeadowBindings>()
 	})
 	.openapi(get_one, async (c) => {
 		const { id } = c.req.valid('param');
-		
+		console.log(id)
 		const result = await db
 			.select()
 			.from(tasks.table)
-			.where(eq(tasks.table.id, parseInt(id, 10)));
+			.where(eq(tasks.table.id, id));
 
 		if (!result.length) return c.json({error: "Task not found"}, 404);
 		return c.json(result);

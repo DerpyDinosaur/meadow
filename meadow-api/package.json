@@ -3,10 +3,17 @@
   "module": "src/index.ts",
   "version": "1.0.0",
   "exports": {
-    "./routes": "./src/routes/index.ts"
+    ".": {
+      "import": {
+        "default": "./dist/hc.js",
+        "types": "./dist/hc.d.ts"
+      }      
+    }
   },
   "scripts": {
     "dev": "bun run --hot ./src/index.ts",
+    "dev:tsc": "tsc -p tsconfig.build.json --watch",
+    "build": "tsc -p tsconfig.build.json",
     "migrate": "bunx drizzle-kit generate && bunx drizzle-kit migrate"
   },
   "dependencies": {

@@ -3,6 +3,15 @@ import { TasksSchema, TasksInsertSchema } from '../../db/schema/tasks';
 
 const tags = ['tasks']
 
+const idSchema = z.string()
+  .regex(/^\d+$/)
+  .transform(Number)
+  .openapi({
+    param: { name: 'id', in: 'path' },
+    type: 'integer',
+    example: '1',
+  });
+
 /* GET */
 export const get_all = createRoute({
   method: 'get',
@@ -26,11 +35,7 @@ export const get_one = createRoute({
   tags,
   request: {
     params: z.object({
-      id: z.string().openapi({
-        param: { name: 'id', in: 'path' },
-        type: 'integer',
-        example: '1',
-      }),
+      id: idSchema,
     }),
   },
   responses: {
@@ -81,11 +86,7 @@ export const put_one = createRoute({
   tags,
   request: {
     params: z.object({
-      id: z.string().openapi({
-        param: { name: 'id', in: 'path' },
-        type: 'integer',
-        example: '1',
-      }),
+      id: idSchema,
     }),
     body: {
       content: {
@@ -117,11 +118,7 @@ export const delete_one = createRoute({
   tags,
   request: {
     params: z.object({
-      id: z.string().openapi({
-        param: { name: 'id', in: 'path' },
-        type: 'integer',
-        example: '1',
-      }),
+      id: idSchema,
     }),
   },
   responses: {
