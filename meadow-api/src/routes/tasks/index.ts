@@ -12,7 +12,6 @@ const app = new OpenAPIHono<MeadowBindings>()
 	})
 	.openapi(get_one, async (c) => {
 		const { id } = c.req.valid('param');
-		console.log(id)
 		const result = await db
 			.select()
 			.from(tasks.table)
@@ -33,7 +32,7 @@ const app = new OpenAPIHono<MeadowBindings>()
 		const [updated] = await db
 			.update(tasks.table)
 			.set(data)
-			.where(eq(tasks.table.id, parseInt(id, 10)))
+			.where(eq(tasks.table.id, id))
 			.returning();
 
 		if (!updated) return c.json({ error: 'Task not found' }, 404);
@@ -44,7 +43,7 @@ const app = new OpenAPIHono<MeadowBindings>()
 
 		const deleted = await db
 			.delete(tasks.table)
-			.where(eq(tasks.table.id, parseInt(id)))
+			.where(eq(tasks.table.id, id))
 			.returning();
 
 		console.log(deleted)

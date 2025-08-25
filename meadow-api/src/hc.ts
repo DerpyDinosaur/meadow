@@ -5,5 +5,5 @@ import { hc } from 'hono/client'
 const client = hc<typeof router>('')
 export type Client = typeof client
 
-export const hcWithType = (...args: Parameters<typeof hc>): Client => 
+export const meadow_api = (...args: Parameters<typeof hc>): Client => 
 	hc<typeof router>(...args)

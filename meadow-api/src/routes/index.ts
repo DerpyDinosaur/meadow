@@ -6,4 +6,3 @@ const app = new OpenAPIHono<MeadowBindings>()
 	.route('/tasks', tasks);
 
 export default app;
-export type AppType = typeof app;

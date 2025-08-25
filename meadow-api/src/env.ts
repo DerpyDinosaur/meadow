@@ -11,7 +11,7 @@ const EnvSchema = z.object({
     "trace",
     "silent",
   ]),
-  BETTER_AUTH_URL: z.string().url(),
+  BETTER_AUTH_URL: z.url(),
   BETTER_AUTH_SECRET: z.string(),
   DB_FILE_NAME: z.string()
 });
