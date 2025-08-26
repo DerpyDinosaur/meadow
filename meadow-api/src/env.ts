@@ -25,7 +25,7 @@ try {
 } catch (e) {
   const error = e as ZodError;
   console.error("Invalid ENV:");
-  console.error(error.flatten().fieldErrors);
+  console.error(error);
   process.exit(1);
 }
 
