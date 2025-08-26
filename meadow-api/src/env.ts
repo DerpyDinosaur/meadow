@@ -21,7 +21,7 @@ export type env = z.infer<typeof EnvSchema>;
 let env: env;
 
 try {
-  env = EnvSchema.parse(Bun.env);
+  env = EnvSchema.parse(process.env);
 } catch (e) {
   const error = e as ZodError;
   console.error("Invalid ENV:");

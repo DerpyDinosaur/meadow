@@ -7,7 +7,7 @@
       "import": {
         "default": "./dist/hc.js",
         "types": "./dist/hc.d.ts"
-      }      
+      }
     }
   },
   "scripts": {
@@ -20,6 +20,7 @@
     "@hono/zod-openapi": "^1.1.0",
     "@scalar/hono-api-reference": "^0.9.13",
     "better-auth": "^1.3.6",
+    "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.4",
     "drizzle-zod": "^0.8.3",
     "hono": "^4.9.2",
