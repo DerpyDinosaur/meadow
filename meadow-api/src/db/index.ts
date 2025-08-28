@@ -5,10 +5,9 @@
 
 // const sqlite = new Database(env.DB_FILE_NAME);
 // export const db = drizzle(sqlite, { schema });
-
-import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
+import env from '../env';
 
-const client = createClient({ url: process.env['DB_FILE_NAME']! });
+const client = createClient({ url: env.DB_FILE_NAME });
 export const db = drizzle({ client });

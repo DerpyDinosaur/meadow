@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { z, ZodError } from "zod";
 
 const EnvSchema = z.object({
