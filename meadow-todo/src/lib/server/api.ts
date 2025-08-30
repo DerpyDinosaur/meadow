@@ -1,3 +1,4 @@
-import { meadow_api } from '@meadow/api';
-const client = meadow_api('http://localhost:3000');
+import type { AppType } from '@meadow/api';
+import { hc } from 'hono/client';
+const client = hc<typeof AppType>('http://localhost:3000');
 export default client;
