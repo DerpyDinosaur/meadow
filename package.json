@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "nx run-many -t dev",
     "build": "nx run-many -t build",
+    "db:push": "nx db:push meadow-api",
     "clean": "bun ./scripts/clean.ts && rm bun.lock"
   },
   "workspaces": [

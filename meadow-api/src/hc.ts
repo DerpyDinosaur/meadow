@@ -1,9 +1,7 @@
-import router from './routes'
+import app from './index';
+import tasks_route from './routes/tasks/index';
 import { hc } from 'hono/client'
 
-// assign the client to a variable to calculate the type when compiling
-const client = hc<typeof router>('')
-export type Client = typeof client
-
-export const meadow_api = (...args: Parameters<typeof hc>): Client => 
-	hc<typeof router>(...args)
+export type hcWithType = typeof app;
+// export type tasksClient = typeof tasks_route;
+export const tasksClient = hc<typeof tasks_route>('/tasks');

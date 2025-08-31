@@ -14,7 +14,9 @@
     "dev": "bun run --hot ./src/index.ts",
     "dev:tsc": "tsc -p tsconfig.build.json --watch",
     "build": "tsc -p tsconfig.build.json",
-    "migrate": "bunx drizzle-kit generate && bunx drizzle-kit migrate"
+    "db:push": "bunx drizzle-kit push",
+    "db:generate": "bunx drizzle-kit generate",
+    "db:migrate": "bunx drizzle-kit generate && bunx drizzle-kit migrate"
   },
   "dependencies": {
     "@hono/zod-openapi": "^1.1.0",
