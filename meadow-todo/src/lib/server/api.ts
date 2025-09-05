@@ -1,7 +1,4 @@
-// import type { tasksClient } from '@meadow/api';
-// import type { hcWithType } from '@meadow/api';
-import { tasksClient } from '@meadow/api';
-import { hc } from 'hono/client';
+import { hcWithType } from '@meadow/api';
 
-// const client = tasksClient('http://localhost:3000');
-// export default client;
+const client = hcWithType('http://localhost:3000/api');
+export default client;

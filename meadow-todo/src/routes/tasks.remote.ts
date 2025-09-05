@@ -1,7 +1,10 @@
 import { query, form } from "$app/server";
-import { tasksClient } from "@meadow/api";
+import client from '$lib/server/api';
 
 export const getTasks = query(async () => {
+	const result = await client.tasks.$get()
+
+	console.log(result)
 	// const result = await tasksClient[":id"].$get({
 	// 	param: {
 	// 		id: "1"
@@ -14,7 +17,7 @@ export const getTasks = query(async () => {
 	// 	}
 	// })
 
-	return ["Heading", "Heading", "Heading", "Heading", "Heading", "Heading", "Heading","Heading", "Heading", "Heading", "Heading", "Heading", "Heading", "Heading", "Heading", "Heading", "Heading", "Heading","Heading", "Heading", "Heading", "Heading"]
+	return []
 })
 
 
