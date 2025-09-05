@@ -1,5 +1,6 @@
 import type { PinoLogger } from "hono-pino";
 import type { auth } from './auth'
+import type { OpenAPIHono } from "@hono/zod-openapi";
 
 export interface MeadowBindings {
   Bindings: {};
@@ -9,3 +10,5 @@ export interface MeadowBindings {
     session: typeof auth.$Infer.Session.session | null
   };
 }
+
+export type MeadowApp = OpenAPIHono<MeadowBindings>;

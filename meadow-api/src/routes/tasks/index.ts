@@ -1,11 +1,10 @@
-import { OpenAPIHono } from '@hono/zod-openapi';
-import { get_one, get_all, post_one, put_one, delete_one } from './docs';
 import { eq } from 'drizzle-orm';
+import { get_one, get_all, post_one, put_one, delete_one } from './docs';
 import { db } from '../../db/index';
 import { tasks } from '../../db/schema';
-import type { MeadowBindings } from '../../lib/types';
+import { mkRouter } from '../../lib/factory';
 
-const app = new OpenAPIHono<MeadowBindings>()
+const router = mkRouter()
 	.openapi(get_all, async (c) => {
 		const result = await db.select().from(tasks.table);
 		return c.json(result);
@@ -46,9 +45,8 @@ const app = new OpenAPIHono<MeadowBindings>()
 			.where(eq(tasks.table.id, id))
 			.returning();
 
-		console.log(deleted)
 		if (!deleted.length) return c.json({error: "Task not found"}, 404);
 		return c.body(null, 204);
 	})
 
-export default app;
+export default router;

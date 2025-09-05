@@ -5,8 +5,8 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/hc.js",
-        "types": "./dist/hc.d.ts"
+        "default": "./dist/src/hc.js",
+        "types": "./dist/src/hc.d.ts"
       }
     }
   },
