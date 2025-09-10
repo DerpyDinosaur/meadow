@@ -5,6 +5,7 @@ import { tasks } from '../../db/schema';
 import { mkRouter } from '../../lib/factory';
 
 const router = mkRouter()
+	.basePath("/tasks")
 	.openapi(get_all, async (c) => {
 		const result = await db.select().from(tasks.table);
 		return c.json(result);

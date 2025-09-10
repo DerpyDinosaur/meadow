@@ -1,8 +1,8 @@
-import { OpenAPIHono } from '@hono/zod-openapi';
 import tasks from './tasks';
-import type { MeadowBindings } from '../lib/types';
 
-const routes = new OpenAPIHono<MeadowBindings>()
-	.route('/tasks', tasks);
+const routes = [
+  tasks,
+] as const;
 
 export default routes;
+export type AppType = typeof routes[number];

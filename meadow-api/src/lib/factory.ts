@@ -7,11 +7,14 @@ import type { MeadowApp, MeadowBindings } from './types';
 export function mkRouter() {
 	return new OpenAPIHono<MeadowBindings>({
 		strict: false,
-	});
+	})
+	.basePath("/api");
 }
 
 export function mkApp() {
-	const app = mkRouter();
+	const app = new OpenAPIHono<MeadowBindings>({
+		strict: false,
+	});
 	return app;
 }
 

@@ -3,7 +3,7 @@ import { cors } from "hono/cors";
 import { onError, logger } from "./middleware";
 import { auth } from './lib/auth';
 import { mkApp, mkOpenapi } from './lib/factory';
-import tasks from "./routes/tasks";
+import routes from "./routes";
 
 const app = mkApp();
 
@@ -29,13 +29,8 @@ app.onError(onError);
 mkOpenapi(app);
 
 // Init Routes
-const routes = [
-  tasks,
-] as const;
-
 routes.forEach((route) => {
-  app.route("/api/tasks", route);
+  app.route("/", route);
 });
 
-export type AppType = typeof routes[number];
 export default app;
