@@ -15,6 +15,10 @@ export const get = query(async () => {
 	return tasks
 })
 
+export const create = form(async (formData) => {
+	const id = formData.get("id") as string;
+})
+
 export const patch = form(async (formData) => {
 	const id = formData.get("id") as string;
 	const text = formData.get("text") as string;
@@ -41,8 +45,3 @@ export const patch = form(async (formData) => {
 	}
 	await get().refresh();
 })
-
-
-// export const formTasks = form(async () => {
-
-// })
