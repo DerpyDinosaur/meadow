@@ -1,29 +1,45 @@
 <script lang="ts">
-  import type { RemoteForm } from "@sveltejs/kit";
+  import type { RemoteForm, RemoteQueryFunction } from "@sveltejs/kit";
+  import type { TaskType } from '@meadow/api';
 
   interface Props {
-    id: number;
-    text: string;
-    patch: RemoteForm<unknown>;
+    task: TaskType
+    get: RemoteQueryFunction<void, TaskType[]>;
+    patch: RemoteForm<void>;
   }
 
-  let { id, text, patch }: Props = $props();
+  let { task, get, patch }: Props = $props();
   let editing = $state<boolean>(false);
 </script>
 
 {#if editing}
-  <form class="p-4 text-2xl neumorphic bg-element rounded-lg" {...patch}>
-    <input hidden name="id" type="number" value={id} />
-    <input
-      name="title"
-      type="text"
-      value={text}
-    />
-    <!-- <input bind:value onblur={submit} {required} use:focus/> -->
+  <form 
+    {...patch.enhance(async ({data, submit}) => {
+      const text = data.get('text') as string;
+      const completed = data.get('completed') === 'on' ? true : false;
+      
+      editing = false;
+      await submit().updates(
+        get().withOverride(tasks => 
+          tasks.map(v => (v.id === task.id ? {...v, text, completed} : v))
+        )
+      )
+    })}
+    class="p-4 text-2xl neumorphic bg-element rounded-lg"
+    onblur={(e) => e.currentTarget.submit()} 
+  >
+    <input name="text" type="text" value={task.text}/>
+    <input name="completed" type="checkbox" checked={task.completed}/>
     <button type="submit" hidden aria-label="submit"></button>
   </form>
 {:else}
-  <div class="p-4 text-2xl neumorphic bg-element rounded-lg" onclick={() => editing=true}>
-    <h2>{text}</h2>
+  <div class="p-4 text-2xl neumorphic bg-element rounded-lg">
+    <header class="flex justify-between items-baseline">
+      <h2>{task.text}</h2>
+      <div>
+        <button onclick={() => editing=true}>Edit</button>
+        <div>{task.completed}</div>
+      </div>
+    </header>
   </div>
 {/if}
