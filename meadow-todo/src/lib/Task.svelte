@@ -15,31 +15,35 @@
 {#if editing}
   <form 
     {...patch.enhance(async ({data, submit}) => {
+      const id = Number(data.get("id"));
       const text = data.get('text') as string;
       const completed = data.get('completed') === 'on' ? true : false;
       
       editing = false;
       await submit().updates(
         get().withOverride(tasks => 
-          tasks.map(v => (v.id === task.id ? {...v, text, completed} : v))
+          tasks.map(v => (v.id === id ? {...v, text, completed} : v))
         )
       )
     })}
     class="p-4 text-2xl neumorphic bg-element rounded-lg"
     onblur={(e) => e.currentTarget.submit()} 
   >
+    <input name="id" type="number" value={task.id} hidden>
     <input name="text" type="text" value={task.text}/>
     <input name="completed" type="checkbox" checked={task.completed}/>
     <button type="submit" hidden aria-label="submit"></button>
   </form>
 {:else}
-  <div class="p-4 text-2xl neumorphic bg-element rounded-lg">
+  <button
+    onclick={() => editing=true}
+    class="p-4 text-2xl neumorphic bg-element rounded-lg"
+  >
     <header class="flex justify-between items-baseline">
       <h2>{task.text}</h2>
       <div>
-        <button onclick={() => editing=true}>Edit</button>
         <div>{task.completed}</div>
       </div>
     </header>
-  </div>
+  </button>
 {/if}
