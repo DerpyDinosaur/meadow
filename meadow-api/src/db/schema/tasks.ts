@@ -1,3 +1,4 @@
+import type { z } from '@hono/zod-openapi';
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
@@ -9,3 +10,5 @@ export const table = sqliteTable('tasks', {
 
 export const TasksSchema = createSelectSchema(table);
 export const TasksInsertSchema = createInsertSchema(table).omit({ id: true });
+
+export type TaskType = z.infer<typeof TasksSchema>

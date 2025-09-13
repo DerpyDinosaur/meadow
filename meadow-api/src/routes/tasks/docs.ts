@@ -7,10 +7,10 @@ const idSchema = z.string()
   .regex(/^\d+$/)
   .transform(Number)
   .openapi({
-    param: { name: 'id', in: 'path' },
-    type: 'integer',
-    example: '1',
-  });
+    param:{ name: 'id', in: 'path', required: true },
+    type: "integer",
+    example: '1'
+  })
 
 /* GET */
 export const get_all = createRoute({
@@ -21,7 +21,7 @@ export const get_all = createRoute({
     200: {
       content: {
         'application/json': {
-          schema: z.array(TasksSchema),
+          schema: TasksSchema.array(),
         },
       },
       description: 'Tasks found',

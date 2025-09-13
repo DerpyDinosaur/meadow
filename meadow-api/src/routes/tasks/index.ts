@@ -18,7 +18,7 @@ const router = mkRouter()
 			.where(eq(tasks.table.id, id));
 
 		if (!result.length) return c.json({error: "Task not found"}, 404);
-		return c.json(result);
+		return c.json(result, 200);
 	})
 	.openapi(post_one, async (c) => {
 		const data = c.req.valid('json');
