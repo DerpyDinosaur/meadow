@@ -1,8 +1,11 @@
 <script lang="ts">
+	import '../app.css';
     import { pushState } from '$app/navigation';
     import { page } from '$app/state';
-	import '../app.css';
-	import { NotebookPen, Sun, Plus, X } from '@lucide/svelte';
+    import { NotebookPen, Sun, Plus } from '@lucide/svelte';
+    import { create } from './tasks.remote';
+    import Modal from '$lib/Modal.svelte';
+
 	let { children } = $props();
 </script>
 
@@ -17,7 +20,6 @@
 		</span>
 		<h1>Meadow Todo</h1>
 	</div>
-
 
 	<div class="flex gap-8">
 		<div class="group">
@@ -39,24 +41,7 @@
 </header>
 
 {#if page.state.modal}
-	<div 
-		class="absolute w-screen h-screen flex justify-center items-center bg-background/50 backdrop-blur-sm" 
-	>
-		<div class="w-1/2 h-auto bg-element">
-			<header>
-				<h1 class="text-2xl">Add Task</h1>
-
-				<div class="group">
-					<button onclick={() => history.back()} class="p-3 inline-flex justify-center items-center rounded-full neumorphic neumorphic-hover border-border outline-ring/50 bg-element group-hover:text-secondary">
-						<X size="20" class="rotate-0"/>
-					</button>
-				</div>
-			</header>
-			
-
-		</div>
-	</div>
-	<!-- <Modal close={() => history.back()} /> -->
+	<Modal title="Add Task" {create}/>
 {/if}
 
 <svelte:boundary>

@@ -16,7 +16,25 @@ export const get = query(async () => {
 })
 
 export const create = form(async (formData) => {
-	const id = formData.get("id") as string;
+	const text = formData.get("text") as string;
+
+	if (!text) {
+		console.error("Text: Undefined")
+		fail(400, "Busted")
+	}
+
+	const result = await client.tasks.$post({
+		json: {
+			text,
+			completed: false
+		}
+	})
+
+	if(!result.ok){
+		console.log(result)
+		fail(400, "Request Broke")
+	}
+	await get().refresh();
 })
 
 export const patch = form(async (formData) => {
@@ -27,7 +45,7 @@ export const patch = form(async (formData) => {
 	if (!id || !text || completed === null){
 		// fail(400, "ID,Text: Undefined");
 		console.error("ID,Text: Undefined")
-		fail(400, "Shit broke")
+		fail(400, "Busted")
 	}
 
 	const result = await client.tasks[":id"].$put({
@@ -39,9 +57,8 @@ export const patch = form(async (formData) => {
 	})
 
 	if(!result.ok){
-		// fail(500, "Broke")
 		console.error("Post failed")
-		fail(400, "Request Shit broke")
+		fail(400, "Request Broke")
 	}
 	await get().refresh();
 })
