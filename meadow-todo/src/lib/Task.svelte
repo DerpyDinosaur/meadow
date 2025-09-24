@@ -5,7 +5,7 @@
   interface Props {
     task: TaskType
     get: RemoteQueryFunction<void, TaskType[]>;
-    patch: RemoteForm<void>;
+    patch: RemoteForm<any, void>;
   }
 
   let { task, get, patch }: Props = $props();
@@ -14,20 +14,12 @@
 
 {#if editing}
   <form 
-    {...patch.enhance(async ({data, submit}) => {
-      const id = Number(data.get("id"));
-      const text = data.get('text') as string;
-      const completed = data.get('completed') === 'on' ? true : false;
-      
-      editing = false;
-      await submit().updates(
-        get().withOverride(tasks => 
-          tasks.map(v => (v.id === id ? {...v, text, completed} : v))
-        )
-      )
-    })}
     class="p-4 text-2xl neumorphic bg-element rounded-lg"
-    onblur={(e) => e.currentTarget.submit()} 
+    {...patch.enhance(async ({ form, submit }) => {
+        editing = false;
+        await submit();
+        form.reset();
+    })}
   >
     <input name="id" type="number" value={task.id} hidden>
     <input name="text" type="text" value={task.text}/>

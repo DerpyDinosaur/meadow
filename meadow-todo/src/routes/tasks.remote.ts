@@ -1,6 +1,7 @@
-import { query, form } from "$app/server";
+import { query, form, command } from "$app/server";
 import client from '$lib/server/api';
 import { fail } from "@sveltejs/kit";
+import { z } from 'zod';
 
 // type PatchJsonType = Parameters<typeof client.tasks[":id"]["$put"]>[0]['json'];
 
@@ -15,50 +16,60 @@ export const get = query(async () => {
 	return tasks
 })
 
-export const create = form(async (formData) => {
-	const text = formData.get("text") as string;
-
-	if (!text) {
-		console.error("Text: Undefined")
-		fail(400, "Busted")
-	}
-
-	const result = await client.tasks.$post({
-		json: {
-			text,
-			completed: false
+export const create = form(
+	z.object({
+		text: z.string(),
+		completed: z.coerce.boolean<string>()
+	}), 
+	async ({ text, completed }) => {
+		if (!text) {
+			console.error("Text: Undefined")
+			fail(400, "Busted")
 		}
-	})
 
-	if(!result.ok){
-		console.log(result)
-		fail(400, "Request Broke")
-	}
-	await get().refresh();
-})
+		console.log(completed)
 
-export const patch = form(async (formData) => {
-	const id = formData.get("id") as string;
-	const text = formData.get("text") as string;
-	const completed = formData.get("completed") === "on" ? true : false;
+		const result = await client.tasks.$post({
+			json: {
+				text,
+				completed: false
+			}
+		})
 
-	if (!id || !text || completed === null){
-		// fail(400, "ID,Text: Undefined");
-		console.error("ID,Text: Undefined")
-		fail(400, "Busted")
-	}
-
-	const result = await client.tasks[":id"].$put({
-		param: { id },
-		json: {
-			text,
-			completed
+		if(!result.ok){
+			console.log(result)
+			fail(400, "Request Broke")
 		}
-	})
-
-	if(!result.ok){
-		console.error("Post failed")
-		fail(400, "Request Broke")
+		await get().refresh();
 	}
-	await get().refresh();
-})
+)
+
+export const patch = form(
+	z.object({
+		id: z.string(),
+		text: z.string(),
+		completed: z.coerce.boolean<string>()
+	}),
+	async ({ id, text, completed }) => {
+		console.log(completed)
+		if (!id || !text){
+			// fail(400, "ID,Text: Undefined");
+			console.error("ID,Text: Undefined")
+			fail(400, "Busted")
+		}
+
+		const result = await client.tasks[":id"].$put({
+			param: { id },
+			json: {
+				text,
+				completed
+			}
+		})
+
+		if(!result.ok){
+			console.error("Post failed")
+			fail(400, "Request Broke")
+		}
+		await get().refresh();
+	}
+);
