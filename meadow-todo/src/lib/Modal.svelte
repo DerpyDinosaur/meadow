@@ -5,7 +5,7 @@
 
 	interface Props {
 		title: string
-		create: RemoteForm<void>
+		create: RemoteForm<any, void>
 	}
 
 	let { title, create }: Props = $props();
@@ -27,7 +27,7 @@
 		</header>
 
 		<form {...create}>
-			<input name="title" type="text"/>
+			<input name="title" type="text" value="" placeholder="Title" />
 		</form>
 	</div>
 	<button 

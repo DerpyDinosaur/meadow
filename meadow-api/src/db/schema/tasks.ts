@@ -4,7 +4,7 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 export const table = sqliteTable('tasks', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  text: text('text').notNull(),
+  title: text('title').notNull(),
   completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
 });
 

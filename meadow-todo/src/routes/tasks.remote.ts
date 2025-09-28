@@ -1,6 +1,6 @@
 import { query, form, command } from "$app/server";
 import client from '$lib/server/api';
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { z } from 'zod';
 
 // type PatchJsonType = Parameters<typeof client.tasks[":id"]["$put"]>[0]['json'];
@@ -18,11 +18,11 @@ export const get = query(async () => {
 
 export const create = form(
 	z.object({
-		text: z.string(),
+		title: z.string(),
 		completed: z.coerce.boolean<string>()
 	}), 
-	async ({ text, completed }) => {
-		if (!text) {
+	async ({ title, completed }) => {
+		if (!title) {
 			console.error("Text: Undefined")
 			fail(400, "Busted")
 		}
@@ -31,7 +31,7 @@ export const create = form(
 
 		const result = await client.tasks.$post({
 			json: {
-				text,
+				title,
 				completed: false
 			}
 		})
@@ -41,18 +41,18 @@ export const create = form(
 			fail(400, "Request Broke")
 		}
 		await get().refresh();
+		redirect(303, "/");
 	}
 )
 
 export const patch = form(
 	z.object({
 		id: z.string(),
-		text: z.string(),
+		title: z.string(),
 		completed: z.coerce.boolean<string>()
 	}),
-	async ({ id, text, completed }) => {
-		console.log(completed)
-		if (!id || !text){
+	async ({ id, title, completed }) => {
+		if (!id || !title){
 			// fail(400, "ID,Text: Undefined");
 			console.error("ID,Text: Undefined")
 			fail(400, "Busted")
@@ -61,7 +61,7 @@ export const patch = form(
 		const result = await client.tasks[":id"].$put({
 			param: { id },
 			json: {
-				text,
+				title,
 				completed
 			}
 		})
@@ -71,5 +71,6 @@ export const patch = form(
 			fail(400, "Request Broke")
 		}
 		await get().refresh();
+		redirect(303, "/");
 	}
 );
