@@ -28,6 +28,7 @@
 
 		<form {...create}>
 			<input name="title" type="text" value="" placeholder="Title" />
+			<input name="text" type="text" value="" placeholder="Description" />
 		</form>
 	</div>
 	<button 

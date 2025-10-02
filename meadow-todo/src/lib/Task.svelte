@@ -1,40 +1,49 @@
 <script lang="ts">
-  import type { RemoteForm, RemoteQueryFunction } from "@sveltejs/kit";
   import type { TaskType } from '@meadow/api';
+  import * as Task from '../routes/tasks.remote';
 
   interface Props {
-    task: TaskType
-    get: RemoteQueryFunction<void, TaskType[]>;
-    patch: RemoteForm<any, void>;
+    data: TaskType
   }
 
-  let { task, get, patch }: Props = $props();
+  let { data }: Props = $props();
+  let task = $state<TaskType>(data);
   let editing = $state<boolean>(false);
-
-  function handle_keypress(e): void {
-    e.preventDefault();
-    if (e.key === 'Enter'){
-      taskForm.submit();
-    }
-  }
 </script>
 
-<section class="p-4 text-2xl neumorphic bg-element rounded-lg">
-  <header class="flex gap-4">
+{editing}
+<section 
+  onfocusin={() => editing = true} 
+  onfocusout={() => editing = false} 
+  class="p-4 text-2xl grid grid-cols-[auto_1fr] grid-rows-2 neumorphic bg-element rounded-lg"
+>
+  <header class="grid grid-cols-subgrid col-span-2">
+  <!-- <header class="flex gap-4 items-center"> -->
     <div>
-      <div class="w-5 h-5 ring-2 ring-secondary rounded-full"></div>
+      <div class="m-1 w-5 h-5 ring-2 ring-secondary rounded-full"></div>
     </div>
-    <h2 contenteditable="plaintext-only">{task.title}</h2>
+
+    <h2 
+      contenteditable 
+      bind:textContent={task.title}
+      class="outline-0"
+      class:underline={editing}
+    >
+      {data.title}
+    </h2>
   </header>
+
+  <div class="grid grid-cols-subgrid col-start-2">
+    This is a test description
+  </div>
 </section>
 
-<form {...patch.enhance(async ({ form, submit }) => {
+<form {...Task.patch.enhance(async ({ form, submit }) => {
       await submit();
       form.reset();
   })}
-  hidden
 >
-  <input name="id" type="number" value={task.id}/>
-  <input name="text" type="text" value={task.title}/>
-  <input name="completed" type="checkbox" checked={task.completed}/>
+  <input name={Task.patch.field("id")} type="number" bind:value={task.id} hidden />
+  <input name={Task.patch.field("title")} type="text" bind:value={task.title} />
+  <input name={Task.patch.field("completed")} type="checkbox" bind:checked={task.completed} />
 </form>
