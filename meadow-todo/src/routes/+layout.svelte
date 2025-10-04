@@ -1,12 +1,17 @@
 <script lang="ts">
 	import '../app.css';
-    import { pushState } from '$app/navigation';
+	import { authClient } from "$lib/auth-client";
+    import { goto, pushState } from '$app/navigation';
     import { page } from '$app/state';
-    import { NotebookPen, Sun, Plus } from '@lucide/svelte';
+    import { NotebookPen, Sun, Plus, LogOut } from '@lucide/svelte';
     import { create } from './tasks.remote';
     import Modal from '$lib/Modal.svelte';
 
 	let { children } = $props();
+	const session = authClient.useSession();
+	if(!session){
+		goto("/login")
+	}
 </script>
 
 <svelte:head>
@@ -21,6 +26,8 @@
 		<h1>Meadow Todo</h1>
 	</div>
 
+	<h2>{$session.data?.user.name ?? "Missing User"}</h2>
+
 	<div class="flex gap-8">
 		<div class="group">
 			<button 
@@ -28,6 +35,15 @@
 				class="p-3 inline-flex justify-center items-center rounded-full neumorphic neumorphic-hover border-border outline-ring/50 bg-element group-hover:text-secondary"
 			>
 				<Plus size="20" class="rotate-0"/>
+			</button>
+		</div>
+
+		<div class="group">
+			<button 
+				onclick={() => authClient.signOut()} 
+				class="p-3 inline-flex justify-center items-center rounded-full neumorphic neumorphic-hover border-border outline-ring/50 bg-element group-hover:text-secondary"
+			>
+				<LogOut size="20" class="rotate-0"/>
 			</button>
 		</div>
 
