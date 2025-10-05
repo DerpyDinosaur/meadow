@@ -4,11 +4,7 @@ import type { AppType } from './routes';
 import type { TasksSchema } from './db/schema/tasks';
 
 // Assign the client to a variable to calculate the type when compiling
-const client = hc<AppType>('', {
-	init: {
-		credentials: "include", // Required for sending cookies cross-origin
-	},
-});
+const client = hc<AppType>('');
 export type Client = typeof client;
 
 export const hcWithType = (...args: Parameters<typeof hc>): Client => hc<AppType>(...args);

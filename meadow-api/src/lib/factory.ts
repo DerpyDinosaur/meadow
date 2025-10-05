@@ -27,11 +27,14 @@ export function mkOpenapi(app: MeadowApp) {
 				targetKey: "js",
 				clientKey: "fetch",
 			},
-			url: "/openapi",
+			sources: [
+				{ url: "/open-api", title: "Meadow" },
+				{ url: "/api/auth/open-api/generate-schema", title: "Authentication" },
+			]
 		}),
 	);
 
-	app.get("/openapi", (c) =>
+	app.get("/open-api", (c) =>
 		c.json(
 			app.getOpenAPI31Document({
 				openapi: '3.1.0',

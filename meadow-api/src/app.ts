@@ -19,10 +19,22 @@ app.use(
     maxAge: 600,
     credentials: true,
   }),
-)
-.on(["POST", "GET"], "/api/auth/*", (c) => {
-  return auth.handler(c.req.raw);
+);
+
+app.use("/api/*", async (c, next) => {
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+
+  if (!session) {
+    c.set("user", null);
+    c.set("session", null);
+    return next();
+  }
+
+  c.set("user", session.user);
+  c.set("session", session.session);
+  return next();
 });
+
 app.use(logger());
 app.onError(onError);
 
@@ -31,6 +43,18 @@ mkOpenapi(app);
 // Init Routes
 routes.forEach((route) => {
   app.route("/", route);
+});
+
+app.use("*", async (c, next) => {
+  console.log("Auth middleware running for:", c.req.path);
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  console.log("Session found:", !!session);
+  // ... rest of middleware
+  return next()
+});
+
+app.on(["POST", "GET"], "/api/auth/*", (c) => {
+  return auth.handler(c.req.raw);
 });
 
 export default app;

@@ -27,8 +27,6 @@ export const create = form(
 			fail(400, "Busted")
 		}
 
-		console.log(completed)
-
 		const result = await client.tasks.$post({
 			json: {
 				title,
