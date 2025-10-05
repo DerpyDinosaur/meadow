@@ -1,4 +1,4 @@
-import { query, form, command } from "$app/server";
+import { query, form, command, getRequestEvent } from "$app/server";
 import client from '$lib/server/api';
 import { fail, redirect } from "@sveltejs/kit";
 import { z } from 'zod';
@@ -6,6 +6,8 @@ import { z } from 'zod';
 // type PatchJsonType = Parameters<typeof client.tasks[":id"]["$put"]>[0]['json'];
 
 export const get = query(async () => {
+	const { cookies } = getRequestEvent();
+	const session = cookies.get("better-auth.session_token");
 	const result = await client.tasks.$get();
 	if(!result.ok){
 		console.error("Unable to fetch tasks");
