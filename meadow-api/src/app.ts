@@ -9,6 +9,7 @@ const app = mkApp();
 
 // Middleware
 app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
+
 app.use(
   "/api/auth/*",
   cors({
@@ -35,6 +36,10 @@ app.use("/api/*", async (c, next) => {
   return next();
 });
 
+app.on(["POST", "GET"], "/api/auth/*", (c) => {
+  return auth.handler(c.req.raw);
+});
+
 app.use(logger());
 app.onError(onError);
 
@@ -43,18 +48,6 @@ mkOpenapi(app);
 // Init Routes
 routes.forEach((route) => {
   app.route("/", route);
-});
-
-app.use("*", async (c, next) => {
-  console.log("Auth middleware running for:", c.req.path);
-  const session = await auth.api.getSession({ headers: c.req.raw.headers });
-  console.log("Session found:", !!session);
-  // ... rest of middleware
-  return next()
-});
-
-app.on(["POST", "GET"], "/api/auth/*", (c) => {
-  return auth.handler(c.req.raw);
 });
 
 export default app;
