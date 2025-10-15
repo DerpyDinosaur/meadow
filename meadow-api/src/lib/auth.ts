@@ -15,6 +15,9 @@ export const auth = betterAuth({
         }
     }),
     trustedOrigins: ['http://localhost:5173'],
+    advanced:{
+        cookiePrefix: "meadow"
+    },
     emailAndPassword: {
         enabled: true
     },

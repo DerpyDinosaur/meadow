@@ -1,5 +1,6 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { TasksSchema, TasksInsertSchema } from '../../db/schema/tasks';
+import { UNAUTHORIZED } from '../../lib/models';
 
 const tags = ['tasks']
 
@@ -21,11 +22,11 @@ export const get_all = createRoute({
     200: {
       content: {
         'application/json': {
-          schema: TasksSchema.array(),
+          schema: TasksSchema.omit({userId:true}).array(),
         },
       },
       description: 'Tasks found',
-    },
+    }
   },
 });
 
@@ -42,7 +43,7 @@ export const get_one = createRoute({
     200: {
       content: {
         'application/json': {
-          schema: TasksSchema,
+          schema: TasksSchema.omit({userId:true}),
         },
       },
       description: 'Task found',
@@ -62,7 +63,7 @@ export const post_one = createRoute({
     body: {
       content: {
         'application/json': {
-          schema: TasksInsertSchema,
+          schema: TasksInsertSchema.omit({userId:true}),
         },
       },
     },
@@ -71,7 +72,7 @@ export const post_one = createRoute({
     201: {
       content: {
         'application/json': {
-          schema: TasksSchema,
+          schema: TasksSchema.omit({userId:true}),
         },
       },
       description: 'Task created',
