@@ -7,10 +7,11 @@ import { z } from 'zod';
 
 export const get = query(async () => {
 	const { cookies } = getRequestEvent();
-	const sessionToken = cookies.get("better-auth.session_token")
+	const sessionToken = cookies.get("meadow.session_token");
+
 	const result = await client.tasks.$get({}, {
 		headers: {
-			Cookie: `better-auth.session_token=${sessionToken}`
+			Cookie: `meadow.session_token=${sessionToken}`
 		}
 	});
 
@@ -28,17 +29,9 @@ export const create = form(
 		title: z.string(),
 		completed: z.coerce.boolean<string>()
 	}), 
-	async ({ title, completed }) => {
-		if (!title) {
-			console.error("Text: Undefined")
-			fail(400, "Busted")
-		}
-
+	async (data) => {
 		const result = await client.tasks.$post({
-			json: {
-				title,
-				completed: false
-			}
+			json: data
 		})
 
 		if(!result.ok){
