@@ -4,12 +4,12 @@ import { onError, logger } from "./middleware";
 import { auth } from './lib/auth';
 import { mkApp, mkOpenapi } from './lib/factory';
 import routes from "./routes";
+import { session } from "./middleware/auth";
 
 const app = mkApp();
 
 // Middleware
 app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
-
 app.use(
   "/api/auth/*",
   cors({
@@ -21,26 +21,7 @@ app.use(
     credentials: true,
   }),
 );
-
-// app.use("/api/*", async (c, next) => {
-//   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-
-//   // if (!session || session.user.email !== "adam.brickhill@lonetree.xyz") {
-//   if (!session) {
-//     c.set("user", null);
-//     c.set("session", null);
-
-//     if(c.req.url.includes("/task")){
-//       return c.json({message: "Unauthorized"}, 401)
-//     }
-    
-//     return next();
-//   }
-
-//   c.set("user", session.user);
-//   c.set("session", session.session);
-//   return next();
-// });
+app.use("/api/*", session)
 
 app.on(["POST", "GET"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);

@@ -1,6 +1,6 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { TasksSchema, TasksInsertSchema } from '../../db/schema/tasks';
-import { UNAUTHORIZED } from '../../lib/models';
+// import { UNAUTHORIZED } from '../../lib/models';
 
 const tags = ['tasks']
 

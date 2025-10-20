@@ -3,22 +3,11 @@ import { get_one, get_all, post_one, put_one, delete_one } from './docs';
 import { db } from '../../db/index';
 import { tasks } from '../../db/schema';
 import { mkRouter } from '../../lib/factory';
-import { createMiddleware } from 'hono/factory';
-import type { MeadowBindings } from '../../lib/types';
-import { auth } from '../../lib/auth';
-
-function session() {
-	return createMiddleware<MeadowBindings>(async (c, next) => {
-		const session = await auth.api.getSession({ headers: c.req.raw.headers });
-		c.set("user", session?.user)
-		await next()
-	})
-}
 
 const router = mkRouter()
 	.basePath("/tasks")
-	.openapi(get_all, session(), async (c) => {
-		const userId = c.get("user").id;
+	.openapi(get_all, async (c) => {
+		const userId = c.get("user")?.id ?? "";
 
 		let result = await db
 			.select({
@@ -33,7 +22,7 @@ const router = mkRouter()
 		return c.json(result);
 	})
 	.openapi(get_one, async (c) => {
-		const userId = c.get("user").id;
+		const userId = c.get("user")?.id ?? "";
 		const { id } = c.req.valid('param');
 		const result = await db
 			.select()
@@ -44,7 +33,7 @@ const router = mkRouter()
 		return c.json(result, 200);
 	})
 	.openapi(post_one, async (c) => {
-		const userId = c.get("user").id;
+		const userId = c.get("user")?.id ?? "";
 		const data = c.req.valid('json');
 		const task = { ...data, userId }
 
@@ -52,7 +41,7 @@ const router = mkRouter()
 		return c.json(new_task, 201);
 	})
 	.openapi(put_one, async (c) => {
-		const userId = c.get("user").id;
+		const userId = c.get("user")?.id ?? "";
 		const { id } = c.req.valid('param');
 		const data = c.req.valid('json');
 
@@ -66,7 +55,7 @@ const router = mkRouter()
 		return c.json(updated);
 	})
 	.openapi(delete_one, async (c) => {
-		const userId = c.get("user").id;
+		const userId = c.get("user")?.id ?? "";
 		const { id } = c.req.valid('param');
 
 		const deleted = await db
