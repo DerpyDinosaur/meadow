@@ -10,7 +10,8 @@
 	let { task }: Props = $props();
 
 	let editing = $state<boolean>(false);
-	let formData = $state<typeof task>(task);
+	// let formData = $state<typeof task>(task);
+	let formData = $state<Omit<TaskType, 'userId'>>(structuredClone(task));
 
 	function handle_edit_click(event: MouseEvent) {
 		event.preventDefault();
@@ -49,16 +50,16 @@
 	</div> -->
 	{#if editing}
 		<form
-			{...patch.enhance(async ({ form, submit, data }) => {
-				await submit();
-				editing = false;
-			})}
+            {...patch.enhance(async ({ form, submit, data }) => {
+              await submit();
+              editing = false;
+            })}
 			class="contents"
 		>
 			<input name="id" type="number" bind:value={formData.id} hidden />
-			<input 
-				name="completed" 
-				type="checkbox" 
+			<input
+				name="completed"
+				type="checkbox"
 				bind:checked={formData.completed}
 				hidden
 			/>
@@ -69,11 +70,11 @@
 				</div>
 
 				<h2>
-					<input 
-						name="title" 
-						type="text" 
+					<input
+						name="title"
+						type="text"
 						bind:value={formData.title}
-						class="p-0 outline-0" 
+						class="p-0 outline-0"
 					/>
 				</h2>
 
@@ -89,9 +90,9 @@
 				</div>
 			</header>
 
-			<div class="min-h-10 grid grid-cols-subgrid col-start-2 items-center">
+			<div class="w-full min-h-10 grid grid-cols-subgrid col-start-2 items-center">
 				<p>
-					<input name="text" type="text" bind:value={formData.text} class="outline-0"/>
+					<input name="text" type="text" bind:value={formData.text} class="outline-0 w-full"/>
 				</p>
 			</div>
 		</form>
@@ -116,11 +117,9 @@
 				</div>
 			</header>
 
-			<div class="min-h-10 grid grid-cols-subgrid col-start-2 items-center">
-				<p>{formData.text}</p>
+			<div class="w-full min-h-10 grid grid-cols-subgrid col-start-2 items-center">
+				<p class="w-full">{formData.text}</p>
 			</div>
 		</div>
 	{/if}
 </section>
-
-
