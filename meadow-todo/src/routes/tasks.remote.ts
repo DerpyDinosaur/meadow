@@ -1,9 +1,16 @@
-import { query, form, command, getRequestEvent } from "$app/server";
+import { query, form, getRequestEvent } from "$app/server";
 import client from '$lib/server/api';
-import { fail, redirect, type RequestEvent } from "@sveltejs/kit";
+import { redirect, error } from "@sveltejs/kit";
 import { z } from 'zod';
 
 // type PatchJsonType = Parameters<typeof client.tasks[":id"]["$put"]>[0]['json'];
+
+const TaskSchema = z.object({
+	id: z.string(),
+	title: z.string(),
+	text: z.string(),
+	completed: z.coerce.boolean<string>()
+})
 
 export const get = query(async () => {
 	const { cookies } = getRequestEvent();
@@ -15,7 +22,7 @@ export const get = query(async () => {
 		}
 	});
 
-	if(!result.ok){
+	if (!result.ok) {
 		console.error("Unable to fetch tasks");
 		return []
 	}
@@ -25,18 +32,25 @@ export const get = query(async () => {
 })
 
 export const create = form(
-	z.object({
-		title: z.string(),
-		completed: z.coerce.boolean<string>()
-	}), 
+	TaskSchema.omit({ id: true }),
 	async (data) => {
-		const result = await client.tasks.$post({
-			json: data
-		})
+		const { cookies } = getRequestEvent();
+		const sessionToken = cookies.get("meadow.session_token");
 
-		if(!result.ok){
+		const result = await client.tasks.$post(
+			{
+				json: data
+			},
+			{
+				headers: {
+					Cookie: `meadow.session_token=${sessionToken}`
+				}
+			}
+		)
+
+		if (!result.ok) {
 			console.log(result)
-			fail(400, "Request Broke")
+			error(400, "Request Broke")
 		}
 		await get().refresh();
 		redirect(303, "/");
@@ -44,29 +58,26 @@ export const create = form(
 )
 
 export const patch = form(
-	z.object({
-		id: z.string(),
-		title: z.string(),
-		completed: z.coerce.boolean<string>()
-	}),
-	async ({ id, title, completed }) => {
-		if (!id || !title){
-			// fail(400, "ID,Text: Undefined");
-			console.error("ID,Text: Undefined")
-			fail(400, "Busted")
-		}
-
-		const result = await client.tasks[":id"].$put({
-			param: { id },
-			json: {
-				title,
-				completed
+	TaskSchema,
+	async (data) => {
+		const { cookies } = getRequestEvent();
+		const sessionToken = cookies.get("meadow.session_token");
+		
+		const result = await client.tasks[":id"].$put(
+			{
+				param: { id: data.id },
+				json: data
+			},
+			{
+				headers: {
+					Cookie: `meadow.session_token=${sessionToken}`
+				}
 			}
-		})
+		)
 
-		if(!result.ok){
+		if (!result.ok) {
 			console.error("Post failed")
-			fail(400, "Request Broke")
+			error(400, "Request Broke")
 		}
 		await get().refresh();
 		redirect(303, "/");
