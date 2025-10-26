@@ -24,7 +24,7 @@
 >
 	{#if editing}
 		<form
-            {...patch.for(task.id).enhance(async ({ form, submit, data }) => {
+            {...patch.for(String(task.id)).enhance(async ({ form, submit, data }) => {
               await submit();
               editing = false;
             })}
@@ -52,7 +52,7 @@
     				</div>
 				</button>
 
-				<h2 contenteditable bind:innerText={formData.title}>
+				<h2 contenteditable bind:innerText={formData.title} class="focus:outline-none">
 					<input
 						name="title"
 						type="text"
@@ -74,9 +74,10 @@
 			</header>
 
 			<div class="w-full min-h-10 grid grid-cols-subgrid col-start-2 items-center">
-				<p>
+			    <textarea name="text"
+				<!-- <p>
 					<input name="text" type="text" bind:value={formData.text} class="outline-0 w-full"/>
-				</p>
+				</p> -->
 			</div>
 		</form>
 	{:else}
