@@ -10,7 +10,8 @@ declare global {
 		}
 		// interface PageData {}
 		interface PageState {
-			modal: boolean
+			modal_create: boolean,
+			modal_edit: boolean
 		}
 		// interface Platform {}
 	}

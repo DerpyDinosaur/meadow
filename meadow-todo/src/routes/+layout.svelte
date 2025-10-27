@@ -5,7 +5,7 @@
     import { page } from '$app/state';
     import { NotebookPen, Sun, Plus, LogOut } from '@lucide/svelte';
     import { create } from './tasks.remote';
-    import Modal from '$lib/Modal.svelte';
+    import Modal from './Modal.svelte';
     import { fade } from 'svelte/transition';
 
 	let { data, children } = $props();
@@ -26,8 +26,8 @@
 	<div class="flex gap-8">
 		{#if data.user}
 			<div transition:fade={{duration: 200}} class="group">
-				<button 
-					onclick={() => pushState('', {modal: true})} 
+				<button
+					onclick={() => pushState('', {modal_create: true, modal_edit: false})}
 					class="p-3 inline-flex justify-center items-center rounded-full neumorphic neumorphic-hover border-border outline-ring/50 bg-element group-hover:text-secondary"
 				>
 					<Plus size="20" class="rotate-0"/>
@@ -35,7 +35,7 @@
 			</div>
 
 			<div transition:fade={{duration: 200}} class="group">
-				<button 
+				<button
 					onclick={() => authClient.signOut({
 						fetchOptions:{
 							onSuccess: () => {
@@ -60,8 +60,8 @@
 	</div>
 </header>
 
-{#if page.state.modal}
-	<Modal title="Add Task" {create}/>
+{#if page.state.modal_create}
+	<Modal title="Add Task" REMOTE={create}/>
 {/if}
 
 <svelte:boundary>
@@ -76,4 +76,3 @@
 
 	{@render children?.()}
 </svelte:boundary>
-
