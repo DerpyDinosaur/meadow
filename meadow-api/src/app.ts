@@ -4,6 +4,7 @@ import { onError, logger } from "./middleware";
 import { auth } from './lib/auth';
 import { mkApp, mkOpenapi } from './lib/factory';
 import routes from "./routes";
+import { session } from "./middleware/auth";
 
 const app = mkApp();
 
@@ -19,10 +20,13 @@ app.use(
     maxAge: 600,
     credentials: true,
   }),
-)
-.on(["POST", "GET"], "/api/auth/*", (c) => {
+);
+app.use("/api/*", session)
+
+app.on(["POST", "GET"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
+
 app.use(logger());
 app.onError(onError);
 

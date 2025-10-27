@@ -3,19 +3,21 @@ import { Scalar } from '@scalar/hono-api-reference';
 import packageJSON from "../../package.json" with { type: "json" };
 import type { MeadowApp, MeadowBindings } from './types';
 
-
-export function mkRouter() {
+export function mkRouter(): MeadowApp {
 	return new OpenAPIHono<MeadowBindings>({
 		strict: false,
 	})
 	.basePath("/api");
 }
 
-export function mkApp() {
-	const app = new OpenAPIHono<MeadowBindings>({
+export function mkApp(): MeadowApp {
+	return new OpenAPIHono<MeadowBindings>({
 		strict: false,
 	});
-	return app;
+	// const app = new OpenAPIHono<MeadowBindings>({
+	// 	strict: false,
+	// });
+	// return app;
 }
 
 export function mkOpenapi(app: MeadowApp) {
@@ -27,11 +29,14 @@ export function mkOpenapi(app: MeadowApp) {
 				targetKey: "js",
 				clientKey: "fetch",
 			},
-			url: "/openapi",
+			sources: [
+				{ url: "/open-api", title: "Meadow" },
+				{ url: "/api/auth/open-api/generate-schema", title: "Authentication" },
+			]
 		}),
 	);
 
-	app.get("/openapi", (c) =>
+	app.get("/open-api", (c) =>
 		c.json(
 			app.getOpenAPI31Document({
 				openapi: '3.1.0',
