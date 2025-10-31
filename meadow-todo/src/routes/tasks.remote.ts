@@ -1,4 +1,4 @@
-import { query, form, getRequestEvent } from "$app/server";
+import { query, form, getRequestEvent, command } from "$app/server";
 import client from '$lib/server/api';
 import { redirect, error } from "@sveltejs/kit";
 import { z } from 'zod';
@@ -62,7 +62,7 @@ export const patch = form(
 	async (data) => {
 		const { cookies } = getRequestEvent();
 		const sessionToken = cookies.get("meadow.session_token");
-		
+
 		const result = await client.tasks[":id"].$put(
 			{
 				param: { id: data.id },
@@ -82,4 +82,32 @@ export const patch = form(
 		await get().refresh();
 		redirect(303, "/");
 	}
+);
+
+export const complete = command(
+  TaskSchema,
+  async (data) => {
+    const { cookies } = getRequestEvent();
+		const sessionToken = cookies.get("meadow.session_token");
+
+    data.completed = !data.completed;
+
+		const result = await client.tasks[":id"].$put(
+			{
+				param: { id: data.id },
+				json: data
+			},
+			{
+				headers: {
+					Cookie: `meadow.session_token=${sessionToken}`
+				}
+			}
+		)
+
+		if (!result.ok) {
+			console.error("Post failed")
+			error(400, "Request Broke")
+		}
+		await get().refresh();
+  }
 );

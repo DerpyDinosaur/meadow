@@ -20,7 +20,7 @@
 }
 
 @layer base {
-  input{
+  input, textarea{
     &:focus{
       outline: 2px solid var(--color-secondary);
     }

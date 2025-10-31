@@ -39,13 +39,18 @@
     					placeholder="Title"
     					class="px-4 py-2 neumorphic-inset rounded-2xl"
     				/>
-    				<input
+    				<!-- <input
     					name="text"
     					type="text"
     					value={value?.text || ""}
     					placeholder="Description"
     					class="px-4 py-2 neumorphic-inset rounded-2xl"
-    				/>
+    				/> -->
+                    <textarea
+                        name="text"
+                        value={value?.text || ""}
+                        class="px-4 py-2 neumorphic-inset rounded-2xl"
+                    ></textarea>
     				<input name="completed" type="checkbox" checked={value?.completed} hidden />
     				<button type="submit" class="">Submit</button>
     			</form>
@@ -64,13 +69,11 @@
        					placeholder="Title"
        					class="px-4 py-2 neumorphic-inset rounded-2xl"
     				/>
-    				<input
-       					name="text"
-       					type="text"
-       					value={value?.text || ""}
-       					placeholder="Description"
-       					class="px-4 py-2 neumorphic-inset rounded-2xl"
-    				/>
+                    <textarea
+                        name="text"
+                        value={value?.text || ""}
+                        class="px-4 py-2 neumorphic-inset rounded-2xl"
+                    ></textarea>
     				<input name="completed" type="checkbox" checked={value?.completed} hidden />
 
     				<button type="submit" class="">Submit</button>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Task from './Task.svelte';
 	import Modal from './Modal.svelte';
-	import { get, patch } from './tasks.remote';
+	import { get, patch, complete } from './tasks.remote';
     import { fade } from 'svelte/transition';
     import { page } from '$app/state';
     import type { TaskType } from '@meadow/api';
@@ -14,8 +14,16 @@
     })
 
     function handle_edit_click(value: TaskType) {
-        active_task = value;
-        pushState("", {modal_create: false, modal_edit: true})
+      active_task = value;
+      pushState("", {modal_create: false, modal_edit: true})
+    }
+
+    async function handle_complete_click(value: TaskType) {
+      try{
+        await complete(value);
+      }catch{
+
+      }
     }
 </script>
 
