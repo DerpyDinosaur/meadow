@@ -1,15 +1,11 @@
 <script lang="ts">
     import type { TaskType } from "@meadow/api";
-    import { page } from '$app/state';
-    import { pushState } from '$app/navigation';
 	import { SquarePen } from "@lucide/svelte";
-	import { patch } from './tasks.remote';
-	import Modal from './Modal.svelte';
 
     interface Props {
-		task: TaskType;
-		onEdit: (value: TaskType) => void;
-		onComplete: (value: TaskType) => void;
+		task: Omit<TaskType, "userId">;
+		onEdit: (value: typeof task) => void;
+		onComplete: (value: typeof task) => void;
 	}
 
 	let { task, onEdit, onComplete }: Props = $props();

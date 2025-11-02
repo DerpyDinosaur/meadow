@@ -90,12 +90,17 @@ export const complete = command(
     const { cookies } = getRequestEvent();
 		const sessionToken = cookies.get("meadow.session_token");
 
-    data.completed = !data.completed;
+		const toggle_completed = {
+		  ...data,
+			completed: !data.completed
+		}
+
+		console.log(toggle_completed)
 
 		const result = await client.tasks[":id"].$put(
 			{
 				param: { id: data.id },
-				json: data
+				json: toggle_completed
 			},
 			{
 				headers: {
