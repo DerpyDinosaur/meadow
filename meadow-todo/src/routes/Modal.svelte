@@ -49,7 +49,7 @@
                     <textarea
                         name="text"
                         value={value?.text || ""}
-                        class="px-4 py-2 neumorphic-inset rounded-2xl"
+                        class="px-4 py-2 min-h-50 neumorphic-inset rounded-2xl"
                     ></textarea>
     				<input name="completed" type="checkbox" checked={value?.completed} hidden />
     				<button type="submit" class="">Submit</button>
@@ -72,7 +72,7 @@
                     <textarea
                         name="text"
                         value={value?.text || ""}
-                        class="px-4 py-2 neumorphic-inset rounded-2xl"
+                        class="px-4 py-2 min-h-50 neumorphic-inset rounded-2xl"
                     ></textarea>
     				<input name="completed" type="checkbox" checked={value?.completed} hidden />
 
