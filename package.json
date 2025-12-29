@@ -13,6 +13,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "nx": "21.4.1"
+    "nx": "21.4.1",
+    "prettier": "3.7.4"
   }
 }
