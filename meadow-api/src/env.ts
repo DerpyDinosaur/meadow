@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 import { z, ZodError } from "zod";
 
 const EnvSchema = z.object({
@@ -14,7 +14,7 @@ const EnvSchema = z.object({
   ]),
   BETTER_AUTH_URL: z.url(),
   BETTER_AUTH_SECRET: z.string(),
-  DB_FILE_NAME: z.string()
+  DB_FILE_NAME: z.string(),
 });
 
 export type env = z.infer<typeof EnvSchema>;

@@ -1,38 +1,39 @@
-import { createRoute, z } from '@hono/zod-openapi';
-import { TasksSchema, TasksInsertSchema } from '../../db/schema/tasks';
+import { createRoute, z } from "@hono/zod-openapi";
+import { TasksSchema, TasksInsertSchema } from "../../db/schema/tasks";
 // import { UNAUTHORIZED } from '../../lib/models';
 
-const tags = ['tasks']
+const tags = ["tasks"];
 
-const idSchema = z.string()
+const idSchema = z
+  .string()
   .regex(/^\d+$/)
   .transform(Number)
   .openapi({
-    param:{ name: 'id', in: 'path', required: true },
+    param: { name: "id", in: "path", required: true },
     type: "integer",
-    example: '1'
-  })
+    example: "1",
+  });
 
 /* GET */
 export const get_all = createRoute({
-  method: 'get',
-  path: '/',
+  method: "get",
+  path: "/",
   tags,
   responses: {
     200: {
       content: {
-        'application/json': {
-          schema: TasksSchema.omit({userId:true}).array(),
+        "application/json": {
+          schema: TasksSchema.omit({ userId: true }).array(),
         },
       },
-      description: 'Tasks found',
-    }
+      description: "Tasks found",
+    },
   },
 });
 
 export const get_one = createRoute({
-  method: 'get',
-  path: '/{id}',
+  method: "get",
+  path: "/{id}",
   tags,
   request: {
     params: z.object({
@@ -42,28 +43,28 @@ export const get_one = createRoute({
   responses: {
     200: {
       content: {
-        'application/json': {
-          schema: TasksSchema.omit({userId:true}),
+        "application/json": {
+          schema: TasksSchema.omit({ userId: true }),
         },
       },
-      description: 'Task found',
+      description: "Task found",
     },
     404: {
-      description: 'Task not found',
+      description: "Task not found",
     },
   },
 });
 
 /* POST */
 export const post_one = createRoute({
-  method: 'post',
-  path: '/',
+  method: "post",
+  path: "/",
   tags,
   request: {
     body: {
       content: {
-        'application/json': {
-          schema: TasksInsertSchema.omit({userId:true}),
+        "application/json": {
+          schema: TasksInsertSchema.omit({ userId: true }),
         },
       },
     },
@@ -71,19 +72,19 @@ export const post_one = createRoute({
   responses: {
     201: {
       content: {
-        'application/json': {
-          schema: TasksSchema.omit({userId:true}),
+        "application/json": {
+          schema: TasksSchema.omit({ userId: true }),
         },
       },
-      description: 'Task created',
+      description: "Task created",
     },
   },
 });
 
 /* PUT */
 export const put_one = createRoute({
-  method: 'put',
-  path: '/{id}',
+  method: "put",
+  path: "/{id}",
   tags,
   request: {
     params: z.object({
@@ -91,7 +92,7 @@ export const put_one = createRoute({
     }),
     body: {
       content: {
-        'application/json': {
+        "application/json": {
           schema: TasksInsertSchema.partial(), // Allow partial updates
         },
       },
@@ -100,22 +101,22 @@ export const put_one = createRoute({
   responses: {
     200: {
       content: {
-        'application/json': {
+        "application/json": {
           schema: TasksSchema,
         },
       },
-      description: 'Task updated',
+      description: "Task updated",
     },
     404: {
-      description: 'Task not found',
+      description: "Task not found",
     },
   },
 });
 
 /* DELETE */
 export const delete_one = createRoute({
-  method: 'delete',
-  path: '/{id}',
+  method: "delete",
+  path: "/{id}",
   tags,
   request: {
     params: z.object({
@@ -124,10 +125,10 @@ export const delete_one = createRoute({
   },
   responses: {
     204: {
-      description: 'Todo deleted',
+      description: "Todo deleted",
     },
     404: {
-      description: 'Todo not found',
+      description: "Todo not found",
     },
   },
 });

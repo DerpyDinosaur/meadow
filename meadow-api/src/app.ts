@@ -1,8 +1,8 @@
 import { serveStatic } from "hono/bun";
 import { cors } from "hono/cors";
 import { onError, logger } from "./middleware";
-import { auth } from './lib/auth';
-import { mkApp, mkOpenapi } from './lib/factory';
+import { auth } from "./lib/auth";
+import { mkApp, mkOpenapi } from "./lib/factory";
 import routes from "./routes";
 import { session } from "./middleware/auth";
 
@@ -21,7 +21,7 @@ app.use(
     credentials: true,
   }),
 );
-app.use("/api/*", session)
+app.use("/api/*", session);
 
 app.on(["POST", "GET"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
