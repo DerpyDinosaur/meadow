@@ -1,4 +1,5 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { createSelectSchema } from "drizzle-zod";
 
 export const user = sqliteTable("user", {
   id: text("id").primaryKey(),
@@ -53,3 +54,6 @@ export const verification = sqliteTable("verification", {
   createdAt: integer("created_at", { mode: "timestamp" }),
   updatedAt: integer("updated_at", { mode: "timestamp" }),
 });
+
+
+export const UserSchema = createSelectSchema(user);

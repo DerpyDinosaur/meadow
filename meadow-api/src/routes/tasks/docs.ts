@@ -15,7 +15,7 @@ const idSchema = z
   });
 
 /* GET */
-export const get_all = createRoute({
+const get_all = createRoute({
   method: "get",
   path: "/",
   tags,
@@ -23,15 +23,18 @@ export const get_all = createRoute({
     200: {
       content: {
         "application/json": {
-          schema: TasksSchema.omit({ userId: true }).array(),
+          schema: TasksSchema.array(),
         },
       },
       description: "Tasks found",
     },
+    404: {
+      description: "Tasks not found",
+    },
   },
 });
 
-export const get_one = createRoute({
+const get_one = createRoute({
   method: "get",
   path: "/{id}",
   tags,
@@ -44,7 +47,7 @@ export const get_one = createRoute({
     200: {
       content: {
         "application/json": {
-          schema: TasksSchema.omit({ userId: true }),
+          schema: TasksSchema,
         },
       },
       description: "Task found",
@@ -56,7 +59,7 @@ export const get_one = createRoute({
 });
 
 /* POST */
-export const post_one = createRoute({
+const post_one = createRoute({
   method: "post",
   path: "/",
   tags,
@@ -64,7 +67,7 @@ export const post_one = createRoute({
     body: {
       content: {
         "application/json": {
-          schema: TasksInsertSchema.omit({ userId: true }),
+          schema: TasksInsertSchema,
         },
       },
     },
@@ -73,16 +76,19 @@ export const post_one = createRoute({
     201: {
       content: {
         "application/json": {
-          schema: TasksSchema.omit({ userId: true }),
+          schema: TasksSchema,
         },
       },
       description: "Task created",
+    },
+    404: {
+      description: "User not found",
     },
   },
 });
 
 /* PUT */
-export const put_one = createRoute({
+const put_one = createRoute({
   method: "put",
   path: "/{id}",
   tags,
@@ -114,7 +120,7 @@ export const put_one = createRoute({
 });
 
 /* DELETE */
-export const delete_one = createRoute({
+const delete_one = createRoute({
   method: "delete",
   path: "/{id}",
   tags,
@@ -132,3 +138,11 @@ export const delete_one = createRoute({
     },
   },
 });
+
+export default {
+  get_all,
+  get_one,
+  post_one,
+  put_one,
+  delete_one
+}
