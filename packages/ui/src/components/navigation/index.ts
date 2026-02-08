@@ -1,1 +1,1 @@
-export { default as Sidebar } from './sidebar/index.js'
+export { default as AppSwitcher } from './app-switcher/AppSwitcher.svelte';

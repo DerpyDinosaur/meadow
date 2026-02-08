@@ -1,0 +1,27 @@
+:root {
+  --font-color: oklch(0 0 0);
+  --background: oklch(0.98 0.01 120); /* Light Green */
+  --foreground: oklch(0.2 0.02 120);
+  --primary: oklch(0.596 0.1274 163.23); /* Green */
+  --secondary: oklch(0.6087 0.1129 52.83); /* Copper */
+  --accent: oklch(0.45 0.12 45);
+  --border: oklch(0.88 0.02 120);
+
+  --element: oklch(0.95 0.015 120);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-color: oklch(1 0 0);
+  }
+}
+
+@theme static {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-element: var(--element);
+}

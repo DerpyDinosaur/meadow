@@ -1,0 +1,8 @@
+@layer base {
+  input,
+  textarea {
+    &:focus {
+      outline: 2px solid var(--color-secondary);
+    }
+  }
+}
