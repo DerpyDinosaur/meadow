@@ -1,14 +1,3 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "targetDefaults": {
-    "build": {
-      "outputs": [
-        "{projectRoot}/dist/**"
-      ],
-      "cache": true
-    },
-    "dev": {
-      "cache": false
-    }
-  }
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

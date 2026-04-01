@@ -1,18 +1,17 @@
 {
   "name": "meadow",
+  "type": "module",
   "private": true,
-  "scripts": {
-    "dev": "nx run-many -t dev",
-    "build": "nx run-many -t build",
-    "db:push": "nx db:push meadow-api",
-    "clean": "bun ./scripts/clean.ts && rm bun.lock"
+  "devDependencies": {
+    "@types/bun": "latest",
+    "nx": "22.6.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
   },
   "workspaces": [
-    "meadow-api",
-    "meadow-todo",
-    "packages/*"
-  ],
-  "devDependencies": {
-    "nx": "21.4.1"
-  }
+      "apps/*",
+      "packages/*",
+      "tools/*"
+  ]
 }
