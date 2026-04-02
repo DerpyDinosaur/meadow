@@ -1,0 +1,11 @@
+@theme {
+    --color-primary: #ff0000;
+}
+
+/* INCLUDE */
+@source "../../*/src/**/*.{svelte,js,ts}";
+/* EXCLUDE */
+@source not "../../*/src/**/*.test.{js,ts}";
+@source not "../../*/src/**/*.spec.{js,ts}";
+@source not "../../*/src/**/*.config.{js,ts}";
+@source not "../../*/src/**/*.d.ts";

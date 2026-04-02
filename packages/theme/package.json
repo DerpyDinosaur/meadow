@@ -1,0 +1,9 @@
+{
+  "name": "@meadow/theme",
+  "type": "module",
+  "description": "Shared tailwind theme",
+  "files": ["src"],
+  "exports": {
+    "./index.css": "./src/index.css"
+  }
+}
