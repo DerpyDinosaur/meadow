@@ -2,7 +2,8 @@
   "name": "meadow",
   "private": true,
   "scripts": {
-      "fmt": "prettier -w {apps,packages,tools}/**/src"
+    "dev": "nx run-many -t dev",
+    "fmt": "prettier -w {apps,packages,tools}/**/src"
   },
   "devDependencies": {
     "@types/bun": "latest",
