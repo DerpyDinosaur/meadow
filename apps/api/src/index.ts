@@ -10,6 +10,7 @@ import { subtasksRouter } from "./routes/subtasks";
 import { cors } from "hono/cors";
 import { session } from "./middleware/auth";
 import { auth } from "./lib/auth";
+import { fileURLToPath } from "node:url";
 
 declare module "hono" {
   interface ContextVariableMap {
@@ -21,7 +22,10 @@ const app = new OpenAPIHono<MeadowBindings>({
   strict: false,
 });
 
-app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
+const faviconPath = fileURLToPath(
+  import.meta.resolve("@meadow/theme/assets/meadow-logo.svg"),
+);
+app.use("/favicon.ico", serveStatic({ path: faviconPath }));
 app.use(
   "/api/auth/*",
   cors({

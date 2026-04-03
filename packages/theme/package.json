@@ -4,6 +4,7 @@
   "description": "Shared tailwind theme",
   "files": ["src"],
   "exports": {
-    "./index.css": "./src/index.css"
+    "./index.css": "./src/index.css",
+    "./assets/*": "./src/assets/*"
   }
 }
