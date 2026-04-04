@@ -1,10 +1,17 @@
 {
   "name": "@meadow/theme",
+  "version": "1.0.0",
   "type": "module",
   "description": "Shared tailwind theme",
-  "files": ["src"],
   "exports": {
-    "./index.css": "./src/index.css",
-    "./assets/*": "./src/assets/*"
-  }
+    "./index.css": "./src/index.css"
+  },
+  "files": ["src"],
+  "keywords": [
+    "tailwind",
+    "theme",
+    "css",
+    "design-system"
+  ],
+  "license": "MIT"
 }

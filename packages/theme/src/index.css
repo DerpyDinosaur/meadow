@@ -1,11 +1,42 @@
-@theme {
-  --color-primary: #ff0000;
+:root {
+  --primary: #00a36d;
+  --secondary: #c87a4d;
+  --background: white;
+
+  --text: black;
 }
 
-/* INCLUDE */
-@source "../../*/src/**/*.{svelte,js,ts}";
-/* EXCLUDE */
-@source not "../../*/src/**/*.test.{js,ts}";
-@source not "../../*/src/**/*.spec.{js,ts}";
-@source not "../../*/src/**/*.config.{js,ts}";
-@source not "../../*/src/**/*.d.ts";
+.dark {
+  --primary: #00a36d;
+  --secondary: #c87a4d;
+  --background: black;
+
+  --text: white;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+
+  --color-text: var(--text);
+  --color-muted: var(--color-zinc-500);
+
+  --shadow-brutal: 3px 3px var(--text);
+}
+
+@layer base {
+  * {
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text);
+  }
+}
+
+@layer components {
+    .brutal {
+        border: 2px solid var(--text);
+        box-shadow: 3px 3px var(--text);
+    }
+}

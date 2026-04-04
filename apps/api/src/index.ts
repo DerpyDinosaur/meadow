@@ -23,7 +23,7 @@ const app = new OpenAPIHono<MeadowBindings>({
 });
 
 const faviconPath = fileURLToPath(
-  import.meta.resolve("@meadow/theme/assets/meadow-logo.svg"),
+  import.meta.resolve("../../../brand/meadow-logo.svg"),
 );
 app.use("/favicon.ico", serveStatic({ path: faviconPath }));
 app.use(

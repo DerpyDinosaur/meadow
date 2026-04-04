@@ -28,12 +28,14 @@
     }
   },
   "dependencies": {
+      "@meadow/theme": "workspace:*",
     "bits-ui": "2.16.5"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
   },
   "devDependencies": {
+
     "@sveltejs/adapter-auto": "^7.0.0",
     "@sveltejs/kit": "^2.50.2",
     "@sveltejs/package": "^2.5.7",
