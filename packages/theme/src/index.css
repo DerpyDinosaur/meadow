@@ -1,6 +1,9 @@
 :root {
   --primary: #00a36d;
   --secondary: #c87a4d;
+  --neutral: #2d3429;
+
+  --element: red;
   --background: white;
 
   --text: black;
@@ -35,8 +38,8 @@
 }
 
 @layer components {
-    .brutal {
-        border: 2px solid var(--text);
-        box-shadow: 3px 3px var(--text);
-    }
+  .brutal {
+    border: 2px solid var(--text);
+    box-shadow: 3px 3px var(--text);
+  }
 }

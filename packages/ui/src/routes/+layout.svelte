@@ -10,10 +10,10 @@
   <title>Meadow UI</title>
 </svelte:head>
 
-<header class="p-3 flex justify-between">
+<header class="p-10 flex justify-center items-center">
   <div class="flex gap-2 justify-center items-center">
-    <img alt="Meadow logo" src={logo} class="size-6"/>
-    <h1 class="text-2xl font-bold">Meadow UI</h1>
+    <img alt="Meadow logo" src={logo} class="size-10"/>
+    <h1 class="text-4xl font-bold uppercase">Meadow UI</h1>
   </div>
   <div></div>
 </header>

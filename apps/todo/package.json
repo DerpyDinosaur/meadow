@@ -12,7 +12,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "dependencies": {
-    "@fontsource-variable/sora": "^5.2.8",
+    "@fontsource-variable/lexend": "^5.2.11",
     "@meadow/theme": "workspace:*",
     "@meadow/ui": "workspace:*"
   },

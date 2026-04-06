@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "nx run-many -t dev",
+    "dev:ui": "nx run ui:dev",
     "fmt": "prettier -w {apps,packages,tools}/**/src"
   },
   "devDependencies": {
