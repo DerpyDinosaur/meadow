@@ -2,9 +2,12 @@
   "name": "meadow",
   "private": true,
   "scripts": {
-    "dev": "nx run-many -t dev",
+    "dev": "nx run-many --targets dev --projects api --projects todo",
     "dev:ui": "nx run ui:dev",
     "fmt": "prettier -w {apps,packages,tools}/**/src"
+  },
+  "overrides": {
+    "hono": "4.12.9"
   },
   "devDependencies": {
     "@types/bun": "latest",
