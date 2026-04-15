@@ -27,7 +27,7 @@ export const listRoute = createRoute({
       description: "List of subtasks",
       content: {
         "application/json": {
-          schema: z.array(subtaskResponseSchema),
+          schema: z.object({ subtasks: z.array(subtaskResponseSchema) }),
         },
       },
     },

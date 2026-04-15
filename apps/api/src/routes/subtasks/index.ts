@@ -17,149 +17,144 @@ declare module "hono" {
   }
 }
 
-const app = new OpenAPIHono();
+const app = new OpenAPIHono()
+  .openapi(listRoute, (c) => {
+    const logger = c.get("logger");
+    const { projectId } = c.req.valid("param");
+    const projectIdNum = Number(projectId);
+    logger.info({ projectId: projectIdNum }, "Fetching subtasks");
 
-app.openapi(listRoute, (c) => {
-  const logger = c.get("logger");
-  const { projectId } = c.req.valid("param");
-  const projectIdNum = Number(projectId);
-  logger.info({ projectId: projectIdNum }, "Fetching subtasks");
+    const project = db
+      .select()
+      .from(projects)
+      .where(eq(projects.id, projectIdNum))
+      .get();
+    if (!project) {
+      return c.json({ error: "Project not found" }, 404);
+    }
 
-  const project = db
-    .select()
-    .from(projects)
-    .where(eq(projects.id, projectIdNum))
-    .get();
-  if (!project) {
-    return c.json({ error: "Project not found" }, 404);
-  }
+    const allSubtasks = db
+      .select()
+      .from(subtasks)
+      .where(eq(subtasks.projectId, projectIdNum))
+      .all();
+    return c.json(allSubtasks, 200);
+  })
+  .openapi(getRoute, (c) => {
+    const logger = c.get("logger");
+    const { projectId, id } = c.req.valid("param");
+    const projectIdNum = Number(projectId);
+    const subtaskId = Number(id);
+    logger.info({ projectId: projectIdNum, subtaskId }, "Fetching subtask");
 
-  const allSubtasks = db
-    .select()
-    .from(subtasks)
-    .where(eq(subtasks.projectId, projectIdNum))
-    .all();
-  return c.json(allSubtasks, 200);
-});
+    const subtask = db
+      .select()
+      .from(subtasks)
+      .where(
+        and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
+      )
+      .get();
 
-app.openapi(getRoute, (c) => {
-  const logger = c.get("logger");
-  const { projectId, id } = c.req.valid("param");
-  const projectIdNum = Number(projectId);
-  const subtaskId = Number(id);
-  logger.info({ projectId: projectIdNum, subtaskId }, "Fetching subtask");
+    if (!subtask) {
+      return c.json({ error: "Subtask not found" }, 404);
+    }
+    return c.json(subtask, 200);
+  })
+  .openapi(createRouteDef, (c) => {
+    const logger = c.get("logger");
+    const { projectId } = c.req.valid("param");
+    const data = c.req.valid("json");
+    const projectIdNum = Number(projectId);
+    logger.info(
+      { projectId: projectIdNum, title: data.title },
+      "Creating subtask",
+    );
 
-  const subtask = db
-    .select()
-    .from(subtasks)
-    .where(
-      and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
-    )
-    .get();
+    const project = db
+      .select()
+      .from(projects)
+      .where(eq(projects.id, projectIdNum))
+      .get();
+    if (!project) {
+      return c.json({ error: "Project not found" }, 404);
+    }
 
-  if (!subtask) {
-    return c.json({ error: "Subtask not found" }, 404);
-  }
-  return c.json(subtask, 200);
-});
+    const result = db
+      .insert(subtasks)
+      .values({
+        projectId: projectIdNum,
+        title: data.title,
+        completed: data.completed ?? false,
+      })
+      .returning()
+      .get();
 
-app.openapi(createRouteDef, (c) => {
-  const logger = c.get("logger");
-  const { projectId } = c.req.valid("param");
-  const data = c.req.valid("json");
-  const projectIdNum = Number(projectId);
-  logger.info(
-    { projectId: projectIdNum, title: data.title },
-    "Creating subtask",
-  );
+    return c.json(result, 201);
+  })
+  .openapi(updateRoute, (c) => {
+    const logger = c.get("logger");
+    const { projectId, id } = c.req.valid("param");
+    const data = c.req.valid("json");
+    const projectIdNum = Number(projectId);
+    const subtaskId = Number(id);
+    logger.info(
+      { projectId: projectIdNum, subtaskId, ...data },
+      "Updating subtask",
+    );
 
-  const project = db
-    .select()
-    .from(projects)
-    .where(eq(projects.id, projectIdNum))
-    .get();
-  if (!project) {
-    return c.json({ error: "Project not found" }, 404);
-  }
+    const existing = db
+      .select()
+      .from(subtasks)
+      .where(
+        and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
+      )
+      .get();
 
-  const result = db
-    .insert(subtasks)
-    .values({
-      projectId: projectIdNum,
-      title: data.title,
-      completed: data.completed ?? false,
-    })
-    .returning()
-    .get();
+    if (!existing) {
+      return c.json({ error: "Subtask not found" }, 404);
+    }
 
-  return c.json(result, 201);
-});
+    const result = db
+      .update(subtasks)
+      .set({
+        ...data,
+        updatedAt: new Date().toISOString(),
+      })
+      .where(
+        and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
+      )
+      .returning()
+      .get();
 
-app.openapi(updateRoute, (c) => {
-  const logger = c.get("logger");
-  const { projectId, id } = c.req.valid("param");
-  const data = c.req.valid("json");
-  const projectIdNum = Number(projectId);
-  const subtaskId = Number(id);
-  logger.info(
-    { projectId: projectIdNum, subtaskId, ...data },
-    "Updating subtask",
-  );
+    return c.json(result, 200);
+  })
+  .openapi(deleteRoute, (c) => {
+    const logger = c.get("logger");
+    const { projectId, id } = c.req.valid("param");
+    const projectIdNum = Number(projectId);
+    const subtaskId = Number(id);
+    logger.info({ projectId: projectIdNum, subtaskId }, "Deleting subtask");
 
-  const existing = db
-    .select()
-    .from(subtasks)
-    .where(
-      and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
-    )
-    .get();
+    const existing = db
+      .select()
+      .from(subtasks)
+      .where(
+        and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
+      )
+      .get();
 
-  if (!existing) {
-    return c.json({ error: "Subtask not found" }, 404);
-  }
+    if (!existing) {
+      return c.json({ error: "Subtask not found" }, 404);
+    }
 
-  const result = db
-    .update(subtasks)
-    .set({
-      ...data,
-      updatedAt: new Date().toISOString(),
-    })
-    .where(
-      and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
-    )
-    .returning()
-    .get();
+    db.delete(subtasks)
+      .where(
+        and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
+      )
+      .run();
 
-  return c.json(result, 200);
-});
-
-app.openapi(deleteRoute, (c) => {
-  const logger = c.get("logger");
-  const { projectId, id } = c.req.valid("param");
-  const projectIdNum = Number(projectId);
-  const subtaskId = Number(id);
-  logger.info({ projectId: projectIdNum, subtaskId }, "Deleting subtask");
-
-  const existing = db
-    .select()
-    .from(subtasks)
-    .where(
-      and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
-    )
-    .get();
-
-  if (!existing) {
-    return c.json({ error: "Subtask not found" }, 404);
-  }
-
-  db.delete(subtasks)
-    .where(
-      and(eq(subtasks.id, subtaskId), eq(subtasks.projectId, projectIdNum)),
-    )
-    .run();
-
-  return c.json({ message: "Subtask deleted" }, 200);
-});
+    return c.json({ message: "Subtask deleted" }, 200);
+  });
 
 export { app as subtasksRouter };
 export type SubtasksApp = typeof app;

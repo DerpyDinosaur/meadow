@@ -17,7 +17,7 @@ export const listRoute = createRoute({
       description: "List of todos",
       content: {
         "application/json": {
-          schema: z.array(todoResponseSchema),
+          schema: z.object({ todos: z.array(todoResponseSchema) }),
         },
       },
     },

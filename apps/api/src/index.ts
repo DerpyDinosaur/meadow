@@ -45,10 +45,12 @@ app.on(["POST", "GET"], "/api/auth/*", (c) => {
 app.use(logger());
 app.onError(onError);
 
-app.route("/api/todos", todosRouter);
-app.route("/api/projects", projectsRouter);
-app.route("/api/projects", subtasksRouter);
+const routes = app
+  .route("/api/todos", todosRouter)
+  .route("/api/projects", projectsRouter)
+  .route("/api/projects", subtasksRouter);
 
 mkOpenapi(app);
 
 export default app;
+export type AppType = typeof routes;

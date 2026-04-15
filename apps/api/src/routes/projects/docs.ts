@@ -17,7 +17,7 @@ export const listRoute = createRoute({
       description: "List of projects",
       content: {
         "application/json": {
-          schema: z.array(projectResponseSchema),
+          schema: z.object({ projects: z.array(projectResponseSchema) }),
         },
       },
     },
