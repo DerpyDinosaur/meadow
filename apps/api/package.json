@@ -3,8 +3,17 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
+    "build": "tsc -p tsconfig.lib.json",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
+  },
+  "exports": {
+    "./hc": {
+      "import": {
+        "default": "./dist/src/hc.js",
+        "types": "./dist/src/hc.d.ts"
+      }
+    }
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "1.5.6",
