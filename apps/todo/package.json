@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "@fontsource-variable/lexend": "^5.2.11",
+    "@meadow/api": "workspace:*",
     "@meadow/theme": "workspace:*",
-    "@meadow/ui": "workspace:*"
+    "@meadow/ui": "workspace:*",
+    "hono": "^4.12.9"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^7.0.0",
